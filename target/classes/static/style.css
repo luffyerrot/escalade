@@ -1,0 +1,27 @@
+html {
+	height: 100%;
+}
+
+body {
+	min-height: 100%;
+	margin: 0;
+	padding: 0;
+	position: relative;
+}
+
+form {
+	margin: 200px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
+footer {
+	background-color: #C3C3C3;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.container {
+	margin-top: 20px;
+}
