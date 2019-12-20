@@ -6,47 +6,47 @@
 </head>
 <body>
 	<header th:insert="fragments/header.html"></header>
-	<div class="container card" align="center">
+	<div class="container card" align="center" th:each="person : ${persons}">
 		<h1 class="card_tittle">Details</h1>
-		<table  class="table table-dark" data-th-each="user : ${userForm}">
+		<table  class="table table-dark">
 			<tr>
 				<th scope="col">Profil</th>
 				<th scope="col">Infos</th>
 			</tr>
 			<tr>
 				<td>Pseudo :</td>
-				<td th:text="${user.pseudo}">...</td>
+				<td th:text="${person.pseudo}">...</td>
 			</tr>
 			<tr>
 				<td>Prénom :</td>
-				<td th:text="${user.prenom}">...</td>
+				<td th:text="${person.prenom}">...</td>
 			</tr>
 			<tr>
 				<td>Nom :</td>
-				<td th:text="${user.nom}">...</td>
+				<td th:text="${person.nom}">...</td>
 			</tr>
 			<tr>
 				<td>Adresse :</td>
-				<td th:text="${user.adresse}">...</td>
+				<td th:text="${person.adresse}">...</td>
 			</tr>
 			<tr>
 				<td>Ville :</td>
-				<td th:text="${user.ville}">...</td>
+				<td th:text="${person.ville}">...</td>
 			</tr>
 			<tr>
 				<td>Date d'anniversaire :</td>
-				<td th:text="${user.anniv}">...</td>
+				<td th:text="${person.anniv}">...</td>
 			</tr>
 			<tr>
 				<td>Age :</td>
-				<td th:text="${user.age} + ' ans'">...</td>
+				<td th:text="${person.age} + ' ans'">...</td>
 			</tr>
 			<tr>
 				<td>Numéro de téléphone :</td>
-				<td th:text="${user.telephone}">...</td>
+				<td th:text="${person.telephone}">...</td>
 			</tr>
 		</table>
-		<a th:href="@{formulaire(id = ${userForm.id})}">Edition</a>
+		<a th:href="@{update(id = ${person.id})}">Edition</a>
 	</div>
 	<div th:insert="fragments/footer.html"></div>
 </body>

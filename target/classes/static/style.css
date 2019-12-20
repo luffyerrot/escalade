@@ -1,25 +1,35 @@
-html {
+html, body {
 	height: 100%;
+	margin: 0;
+	padding: 0;
 }
 
 body {
-	min-height: 100%;
-	margin: 0;
-	padding: 0;
+	display: table;
 	position: relative;
+	width: 100%;
+	padding-bottom: 5em;
+}
+
+footer {
+	background-color: grey;
+	display: table-row;
+	height: 60px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+* {
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 form {
 	margin: 200px;
 	margin-top: 2px;
 	margin-bottom: 2px;
-}
-
-footer {
-	background-color: #C3C3C3;
-	bottom: 0;
-	left: 0;
-	right: 0;
 }
 
 .container {
