@@ -6,10 +6,10 @@
 </head>
 <body>
 	<header th:insert="fragments/header.html"></header>
-	<div class="container">
-		<div class="card">
-			<div class="card-body" align="center">
-				<h1>Information</h1>
+	<div align="center">
+		<h1 class="card_tittle"><b>Profils</b></h1>
+		<div class="container card">
+			<div class="card-body">
 				<table class="table table-dark">
 					<thead>
 						<tr>
@@ -24,7 +24,7 @@
 					        <td th:text="${person.pseudo}">...</td>
 					        <td th:text="${person.prenom}">...</td>
 					        <td th:text="${person.nom}">...</td>
-					        <td><a th:href="@{detail(id = ${person.id})}">Détails</a></td>
+					        <td><div id="link"><a th:href="@{detail(id = ${person.id})}" class="btn btn-outline-secondary">Détails</a></div></td>
 					    </tr>
 					</tbody>
 				</table>
