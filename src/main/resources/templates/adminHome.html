@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:insert="fragments/head.html">
+	<meta charset="UTF-8"/>
+	<title>Admin Profils</title>
+</head>
+<body>
+	<header th:insert="fragments/header.html"></header>
+	<div align="center">
+		<h1 class="card_tittle"><b>Admin Profils</b></h1>
+		<div class="container card">
+			<div class="card-body">
+				<p>Vous êtes dans le Home des admins ! </p>
+			</div>
+		</div>
+	</div>
+	<p align="center" sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></p>
+	<div th:insert="fragments/footer.html"></div>
+</body>
+</html>

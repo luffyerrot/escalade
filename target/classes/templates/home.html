@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="www.thymeleaf.org">
+<html xmlns:th="www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head th:insert="fragments/head.html">
 	<meta charset="UTF-8"/>
-	<title>Profil</title>
+	<title>Profils</title>
 </head>
 <body>
 	<header th:insert="fragments/header.html"></header>
@@ -19,18 +20,23 @@
 							<th scope="col">Detail</th>
 						</tr>
 					</thead>
-					<tbody th:each="person : ${persons}">
+					<tbody th:each="user : ${users}">
 						<tr>
-					        <td th:text="${person.pseudo}">...</td>
-					        <td th:text="${person.prenom}">...</td>
-					        <td th:text="${person.nom}">...</td>
-					        <td><div id="link"><a th:href="@{detail(id = ${person.id})}" class="btn btn-outline-secondary">Détails</a></div></td>
+					        <td th:text="${user.pseudo}">...</td>
+					        <td th:text="${user.prenom}">...</td>
+					        <td th:text="${user.nom}">...</td>
+					        <td>
+					        	<div id="link">
+					        		<a th:href="@{user/detail(id = ${user.id})}" class="btn btn-outline-secondary">Détails</a>
+					        	</div>
+					        </td>
 					    </tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
 	</div>
+	<p align="center" sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></p>
 	<div th:insert="fragments/footer.html"></div>
 </body>
 </html>

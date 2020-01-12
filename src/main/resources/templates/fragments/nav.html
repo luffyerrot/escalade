@@ -1,5 +1,8 @@
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
 	<a class="navbar-brand" th:href="@{/}">Home</a>
+	<div sec:authorize="hasRole('ROLE_ADMIN')">
+		<a class="navbar-brand" th:href="@{admin/}">AdminHome</a>
+	</div>
 	<div class="collapse navbar-collapse">
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item"><a class="nav-link" th:href="@{/create}">Creation</a></li>
