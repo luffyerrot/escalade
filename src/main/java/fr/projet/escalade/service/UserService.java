@@ -1,4 +1,4 @@
-package fr.projet.escalade.utils;
+package fr.projet.escalade.service;
 
 import org.springframework.stereotype.Service;
 
