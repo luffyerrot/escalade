@@ -13,14 +13,18 @@ public class Role implements Serializable{
 	@Id 
 	@GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-	
-    @Column(nullable = false, unique = true)
+    
+	@Column(nullable = false, unique = true)
     @NotEmpty
     private String name;
+    
+	//---------------------------------------------------------------------------------
+	
+	@ManyToMany(mappedBy = "roles")
+    private List <User> users;
 
-    @ManyToMany(mappedBy = "roles")
-    private List < User > users;
-
+	//---------------------------------------------------------------------------------
+	
 	public Integer getId() {
 		return id;
 	}
