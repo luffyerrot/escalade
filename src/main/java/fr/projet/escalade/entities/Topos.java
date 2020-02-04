@@ -1,6 +1,7 @@
 package fr.projet.escalade.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -21,14 +22,20 @@ public class Topos implements Serializable{
 	@Column(nullable=false)
     private Boolean reserved;
 	
-	@Column(nullable=true, unique=false)
+	@Column(nullable=false, unique=false)
     private String description;
+	
+	@Column(nullable=true, unique=false)
+	private String date;
 
 	//---------------------------------------------------------------------------------
 	
-	@ManyToOne()
+	@ManyToOne
 	@JoinColumn(name = "user_id")
     private User user;
+	
+	@ManyToMany
+	private List<Sector> sectors;
 	
 	@OneToOne(mappedBy = "topos", cascade=CascadeType.ALL)
     private Booking booking;
@@ -89,5 +96,21 @@ public class Topos implements Serializable{
 
 	public void setBooking(Booking booking) {
 		this.booking = booking;
+	}
+
+	public List<Sector> getSectors() {
+		return sectors;
+	}
+
+	public void setSectors(List<Sector> sectors) {
+		this.sectors = sectors;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
 	}
 }

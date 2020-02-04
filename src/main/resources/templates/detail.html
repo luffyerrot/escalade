@@ -17,35 +17,35 @@
 					</tr>
 					<tr>
 						<td>Pseudo :</td>
-						<td th:text="${user.pseudo}">...</td>
+						<td th:text="${user.username}">...</td>
 					</tr>
 					<tr>
 						<td>Prénom :</td>
-						<td th:text="${user.prenom}">...</td>
+						<td th:text="${user.profil.firstname}">...</td>
 					</tr>
 					<tr>
 						<td>Nom :</td>
-						<td th:text="${user.nom}">...</td>
+						<td th:text="${user.profil.lastname}">...</td>
 					</tr>
 					<tr>
 						<td>Adresse :</td>
-						<td th:text="${user.adresse}">...</td>
+						<td th:text="${user.profil.adress}">...</td>
 					</tr>
 					<tr>
 						<td>Ville :</td>
-						<td th:text="${user.ville}">...</td>
+						<td th:text="${user.profil.country}">...</td>
 					</tr>
 					<tr>
 						<td>Date d'anniversaire :</td>
-						<td th:text="${user.anniv}">...</td>
+						<td th:text="${user.profil.birthDate}">...</td>
 					</tr>
 					<tr>
 						<td>Age :</td>
-						<td th:text="${user.age} + ' ans'">...</td>
+						<td th:text="${user.profil.age} + ' ans'">...</td>
 					</tr>
 					<tr>
 						<td>Numéro de téléphone :</td>
-						<td th:text="${user.telephone}">...</td>
+						<td th:text="${user.profil.phone_number}">...</td>
 					</tr>
 				</table>
 			</div>

@@ -42,10 +42,13 @@ public class User implements Serializable {
     private List <Topos> topos;
 	
 	@OneToMany(mappedBy = "user", cascade=CascadeType.ALL)
-    private List <Booking> bookings;
+    private List <Sector> sectors;
 	
-    @OneToOne(mappedBy = "user", cascade=CascadeType.ALL)
-    private Profil profil;
+	@OneToMany(mappedBy = "user", cascade=CascadeType.ALL)
+    private List <Comment> comments;
+	
+	@OneToMany(mappedBy = "user", cascade=CascadeType.ALL)
+    private List <Booking> bookings;
     
     //----------------------------------------------------------------------------------
     
@@ -89,14 +92,6 @@ public class User implements Serializable {
 		this.roles = roles;
 	}
 
-	public Profil getProfil() {
-		return profil;
-	}
-
-	public void setProfil(Profil profil) {
-		this.profil = profil;
-	}
-
 	public List<Topos> getTopos() {
 		return topos;
 	}
@@ -111,5 +106,21 @@ public class User implements Serializable {
 
 	public void setBookings(List<Booking> bookings) {
 		this.bookings = bookings;
+	}
+
+	public List<Sector> getSectors() {
+		return sectors;
+	}
+
+	public void setSectors(List<Sector> sectors) {
+		this.sectors = sectors;
+	}
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
 	}
 }
