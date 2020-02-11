@@ -51,7 +51,14 @@ public class User implements Serializable {
     private List <Booking> bookings;
     
     //----------------------------------------------------------------------------------
-    
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", email=" + email + ", password=" + password + ", username=" + username + ", roles="
+				+ roles + ", topos=" + topos + ", sectors=" + sectors + ", comments=" + comments + ", bookings="
+				+ bookings + "]";
+	}
+	
 	public Long getId() {
 		return id;
 	}

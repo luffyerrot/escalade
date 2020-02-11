@@ -1,5 +1,7 @@
 package fr.projet.escalade.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +16,16 @@ public class ToposService extends CustomUserDetailsService{
 	@Autowired
 	private ToposRepository toposRepository;
 	
-	public Topos getByUserId(Long id) {
+	public Topos getById(Long id) {
 		return toposRepository.findById(id).get();
 	}
 	
+	public List<Topos> getByUserId(Long id) {
+		return toposRepository.findByUserId(id);
+	}
+	
 	public Topos save(Topos topos) {
+		System.out.println("ToposService : " + topos);
 		return toposRepository.save(topos);
 	}
 }

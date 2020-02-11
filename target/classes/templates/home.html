@@ -15,19 +15,17 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 					<thead>
 						<tr>
 							<th scope="col">Pseudo</th>
-							<th scope="col">Prénom</th>
-							<th scope="col">Nom</th>
+							<th scope="col">Mail</th>
 							<th scope="col">Detail</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr th:each="user : ${users}">
 					        <td th:text="${user.username}">...</td>
-					        <td th:text="${user}">...</td>
-					        <td th:text="${user}">...</td>
+					        <td th:text="${user.email}">...</td>
 					        <td>
 					        	<div id="link">
-					        		<a th:href="@{/user/detail(id = ${user.id})}" class="btn btn-outline-secondary">Détails</a>
+					        		<a th:href="@{/user/detail}" class="btn btn-outline-secondary">Détails</a>
 					        	</div>
 					        </td>
 					    </tr>
@@ -39,9 +37,8 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 	<div sec:authorize="isAuthenticated()">
 		<p align="center">
 			<a th:href="@{/logout}">Logout</a>
-			<div sec:authorize="hasRole('ROLE_USER')">
-				<a class="nav-link" th:href="@{/user/topos(id = ${id})}">Mes Topos</a>
-			</div>
+			<br/>
+			<a class="nav-link" th:href="@{/topos/info}">Mes Topos</a>
 		</p>
 	</div>
 	<div th:insert="fragments/footer.html"></div>

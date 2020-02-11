@@ -31,7 +31,7 @@ public class Topos implements Serializable{
 	//---------------------------------------------------------------------------------
 	
 	@ManyToOne
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "user_id", unique=false, nullable=false, referencedColumnName="id")
     private User user;
 	
 	@ManyToMany
@@ -42,6 +42,13 @@ public class Topos implements Serializable{
 
 	//---------------------------------------------------------------------------------
 
+	@Override
+	public String toString() {
+		return "Topos [id=" + id + ", name=" + name + ", place=" + place + ", reserved=" + reserved + ", description="
+				+ description + ", date=" + date + ", user=" + user + ", sectors=" + sectors + ", booking=" + booking
+				+ "]";
+	}
+	
 	public Long getId() {
 		return id;
 	}
