@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "topos")
 public class Topos implements Serializable{
@@ -30,14 +32,14 @@ public class Topos implements Serializable{
 
 	//---------------------------------------------------------------------------------
 	
-	@ManyToOne
-	@JoinColumn(name = "user_id", unique=false, nullable=false, referencedColumnName="id")
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name = "user_id")
     private User user;
 	
-	@ManyToMany
+	@OneToMany(mappedBy="topos")
 	private List<Sector> sectors;
 	
-	@OneToOne(mappedBy = "topos", cascade=CascadeType.ALL)
+	@OneToOne(mappedBy = "topos")
     private Booking booking;
 
 	//---------------------------------------------------------------------------------

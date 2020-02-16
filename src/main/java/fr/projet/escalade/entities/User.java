@@ -1,11 +1,14 @@
 package fr.projet.escalade.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "users")
@@ -39,7 +42,7 @@ public class User implements Serializable {
     private List <Role> roles;
 	
 	@OneToMany(mappedBy = "user", cascade=CascadeType.ALL)
-    private List <Topos> topos;
+    private Collection <Topos> topos;
 	
 	@OneToMany(mappedBy = "user", cascade=CascadeType.ALL)
     private List <Sector> sectors;
@@ -51,13 +54,6 @@ public class User implements Serializable {
     private List <Booking> bookings;
     
     //----------------------------------------------------------------------------------
-
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", email=" + email + ", password=" + password + ", username=" + username + ", roles="
-				+ roles + ", topos=" + topos + ", sectors=" + sectors + ", comments=" + comments + ", bookings="
-				+ bookings + "]";
-	}
 	
 	public Long getId() {
 		return id;
@@ -99,11 +95,11 @@ public class User implements Serializable {
 		this.roles = roles;
 	}
 
-	public List<Topos> getTopos() {
+	public Collection<Topos> getTopos() {
 		return topos;
 	}
 
-	public void setTopos(List<Topos> topos) {
+	public void setTopos(Collection<Topos> topos) {
 		this.topos = topos;
 	}
 

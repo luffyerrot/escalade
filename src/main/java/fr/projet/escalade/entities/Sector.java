@@ -10,6 +10,7 @@ import javax.persistence.*;
 public class Sector implements Serializable{
 	
 	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 	
@@ -17,24 +18,22 @@ public class Sector implements Serializable{
     private Integer global_length;
 	
 	@Column(nullable=true, unique=false)
-    private Integer way_number;
-	
-	@Column(nullable=true, unique=false)
     private String type;
 
 	//---------------------------------------------------------------------------------
 
-	@ManyToMany(mappedBy="sectors", cascade=CascadeType.ALL)
-	private List<Topos> topos;
+	@ManyToOne()
+	@JoinColumn(name = "topos_id")
+	private Topos topos;
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
     private User user;
 	
-	@OneToMany(mappedBy = "sector", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "sector") 
     private List <Comment> comments;
 	
-	@ManyToMany
+	@OneToMany(mappedBy="sector")
 	private List<Way> ways;
 
 	//---------------------------------------------------------------------------------
@@ -55,14 +54,6 @@ public class Sector implements Serializable{
 		this.global_length = global_length;
 	}
 
-	public Integer getWay_number() {
-		return way_number;
-	}
-
-	public void setWay_number(Integer way_number) {
-		this.way_number = way_number;
-	}
-
 	public String getType() {
 		return type;
 	}
@@ -79,11 +70,11 @@ public class Sector implements Serializable{
 		this.ways = ways;
 	}
 
-	public List<Topos> getTopos() {
+	public Topos getTopos() {
 		return topos;
 	}
 
-	public void setTopos(List<Topos> topos) {
+	public void setTopos(Topos topos) {
 		this.topos = topos;
 	}
 

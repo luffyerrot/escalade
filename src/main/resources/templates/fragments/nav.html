@@ -3,7 +3,17 @@
 	<div sec:authorize="hasRole('ROLE_ADMIN')">
 		<a class="navbar-brand" th:href="@{/admin/}">AdminHome</a>
 	</div>
-	<div class="collapse navbar-collapse">
+	<div sec:authorize="hasRole('ROLE_USER')">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item"><a class="nav-link" th:href="@{/topos/info}">Info</a></li>
+		</ul>
+	</div>
+	<div class="collapse navbar-collapse" sec:authorize="isAuthenticated()">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item"><a class="nav-link" th:href="@{/logout}">Logout</a></li>
+		</ul>
+	</div>
+	<div class="collapse navbar-collapse" sec:authorize="!isAuthenticated()">
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item"><a class="nav-link" th:href="@{/create}">Inscription</a></li>
 			<li class="nav-item"><a class="nav-link" th:href="@{/login}">Connection</a></li>

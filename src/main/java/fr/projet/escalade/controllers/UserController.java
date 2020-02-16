@@ -19,7 +19,7 @@ import fr.projet.escalade.service.UserService;
 public class UserController {
 
 	@Autowired
-	UserService userService = new UserService();
+	UserService userService;
 	
 	@Autowired
 	PasswordEncoder passwordEncoder;

@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import fr.projet.escalade.entities.Sector;
 import fr.projet.escalade.entities.Topos;
 import fr.projet.escalade.entities.User;
+import fr.projet.escalade.service.SectorService;
 import fr.projet.escalade.service.ToposService;
 import fr.projet.escalade.service.UserService;
 
@@ -24,9 +26,11 @@ import fr.projet.escalade.service.UserService;
 public class ToposController {
 
 	@Autowired
-	UserService userService = new UserService();
+	UserService userService;
 	@Autowired
-	ToposService toposService = new ToposService();
+	ToposService toposService;
+	@Autowired
+	SectorService sectorService;
 	
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView createGet(ModelMap model) {
@@ -46,7 +50,12 @@ public class ToposController {
 		topos.setUser(user);
 		topos.setDate(format.format(date));
 		toposService.save(topos);
-	    return new ModelAndView("topos/create", model);
+		try {
+			model.addAttribute("topos", toposService.getByUserId(id));
+			model.addAttribute("sectors", sectorService.getByUserId(id));
+		}catch(NoSuchElementException e) {
+		}
+	    return new ModelAndView("topos/info", model);
 	}
 	
 	@RequestMapping(value = "/info", method = RequestMethod.GET)
@@ -55,16 +64,32 @@ public class ToposController {
 		Long id = userService.getIdByName(auth.getName());
 		try {
 			model.addAttribute("topos", toposService.getByUserId(id));
+			model.addAttribute("sectors", sectorService.getByUserId(id));
 		}catch(NoSuchElementException e) {
 		}
 	    return new ModelAndView("topos/info", model);
 	}
 	
-	@RequestMapping(value = "/info", method = RequestMethod.POST)
-	public ModelAndView infoPost(@ModelAttribute("topos") Topos topos, ModelMap model) {
+	@RequestMapping(value = "/sectorcreate", method = RequestMethod.GET)
+	public ModelAndView sectorcreateGet(ModelMap model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Long id = userService.getIdByName(auth.getName());
 		model.addAttribute("users", userService.getById(id));
+	    return new ModelAndView("topos/sectorCreate", model);
+	}
+	
+	@RequestMapping(value = "/sectorcreate", method = RequestMethod.POST)
+	public ModelAndView sectorcreatePost(@ModelAttribute("sector") Sector sector, ModelMap model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Long id = userService.getIdByName(auth.getName());
+		User user = userService.getById(id);
+		sector.setUser(user);
+		sectorService.save(sector);
+		try {
+			model.addAttribute("topos", toposService.getByUserId(id));
+			model.addAttribute("sectors", sectorService.getByUserId(id));
+		}catch(NoSuchElementException e) {
+		}
 	    return new ModelAndView("topos/info", model);
 	}
 }

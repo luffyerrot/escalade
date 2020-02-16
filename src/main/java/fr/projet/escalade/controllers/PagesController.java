@@ -24,11 +24,11 @@ import fr.projet.escalade.service.UserService;
 public class PagesController{
 	
 	@Autowired
-	UserService userService = new UserService();
+	UserService userService;
 	@Autowired
-	ToposService toposService = new ToposService();
+	ToposService toposService;
 	@Autowired
-	RoleService roleService = new RoleService();
+	RoleService roleService;
 	
 	@Autowired
 	PasswordEncoder passwordEncoder;

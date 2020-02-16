@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head th:insert="fragments/head.html">
+	<meta charset="UTF-8"/>
+	<title>Création de secteur</title>
+</head>
+<body>
+	<header th:insert="fragments/header.html"></header>
+	<div align="center">
+		<h1><b>Mes Secteurs :</b></h1>
+		<br/>
+		<div class="container card">
+			<h1>Créer un secteur</h1>
+			<form action="#" th:action="@{/topos/sectorcreate}" th:objet="${sector}" method="post">
+				<input type="hidden" th:name="reserved" th:value="false"></input>
+				<div class="form-group">
+					<label>Taille total :</label>
+					<input type="text" th:name="global_length" placeholder="La taille total du secteur (en km²)" autofocus class="form-control"/>
+				</div>
+				<br/>
+				<div class="form-group">
+					<label>Type de secteur :</label>
+					<input type="text" th:name="type" placeholder="Le type de secteur" class="form-control"/>
+				</div>
+				<br/>
+				<div class="form-group">
+					<label>Nombre de parcours :</label>
+					<input type="text" th:name="way_number" placeholder="Le nombre de parcours" class="form-control"/>
+				</div>
+				<br/>
+				<input type="submit" value="Envoyer"  class="btn btn-outline-secondary" id="link"/>
+				<br/>
+			</form>
+		</div>
+	</div>
+	<div th:insert="fragments/footer.html"></div>
+</body>
+</html>

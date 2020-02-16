@@ -6,7 +6,8 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -28,8 +29,9 @@ public class Way implements Serializable{
 
 	//---------------------------------------------------------------------------------
 
-	@ManyToMany(mappedBy="ways")
-	private List<Sector> sectors;
+	@ManyToOne
+	@JoinColumn(name = "sector_id")
+	private Sector sector;
 	
 	//---------------------------------------------------------------------------------
 
@@ -65,11 +67,11 @@ public class Way implements Serializable{
 		this.description = description;
 	}
 
-	public List<Sector> getSectors() {
-		return sectors;
+	public Sector getSector() {
+		return sector;
 	}
 
-	public void setSectors(List<Sector> sectors) {
-		this.sectors = sectors;
+	public void setSector(Sector sector) {
+		this.sector = sector;
 	}
 }

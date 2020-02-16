@@ -34,13 +34,6 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 			</div>
 		</div>
 	</div>
-	<div sec:authorize="isAuthenticated()">
-		<p align="center">
-			<a th:href="@{/logout}">Logout</a>
-			<br/>
-			<a class="nav-link" th:href="@{/topos/info}">Mes Topos</a>
-		</p>
-	</div>
 	<div th:insert="fragments/footer.html"></div>
 </body>
 </html>
