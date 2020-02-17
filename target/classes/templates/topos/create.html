@@ -7,8 +7,6 @@
 <body>
 	<header th:insert="fragments/header.html"></header>
 	<div align="center">
-		<h1><b>Mes topos :</b></h1>
-		<br/>
 		<div class="container card">
 			<h1>Créer un topos</h1>
 			<form action="#" th:action="@{/topos/create}" th:objet="${topos}" method="post" id="formTopos">

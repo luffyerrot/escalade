@@ -41,6 +41,9 @@ public class Topos implements Serializable{
 	
 	@OneToOne(mappedBy = "topos")
     private Booking booking;
+	
+	@OneToMany(mappedBy = "topos") 
+    private List <Comment> comments;
 
 	//---------------------------------------------------------------------------------
 
@@ -121,5 +124,13 @@ public class Topos implements Serializable{
 
 	public void setDate(String date) {
 		this.date = date;
+	}
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
 	}
 }

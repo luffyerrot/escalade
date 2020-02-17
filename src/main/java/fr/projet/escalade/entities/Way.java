@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,6 +18,7 @@ import javax.persistence.Table;
 public class Way implements Serializable{
 	
 	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 	
@@ -29,6 +33,10 @@ public class Way implements Serializable{
 
 	//---------------------------------------------------------------------------------
 
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name = "user_id")
+    private User user;
+	
 	@ManyToOne
 	@JoinColumn(name = "sector_id")
 	private Sector sector;
@@ -73,5 +81,13 @@ public class Way implements Serializable{
 
 	public void setSector(Sector sector) {
 		this.sector = sector;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 }

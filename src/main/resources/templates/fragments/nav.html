@@ -5,7 +5,9 @@
 	</div>
 	<div sec:authorize="hasRole('ROLE_USER')">
 		<ul class="navbar-nav mr-auto">
-			<li class="nav-item"><a class="nav-link" th:href="@{/topos/info}">Info</a></li>
+			<li class="nav-item"><a class="nav-link" th:href="@{/topos/info}">Info Topos</a></li>
+			<li class="nav-item"><a class="nav-link" th:href="@{/sector/info}">Info Secteur</a></li>
+			<li class="nav-item"><a class="nav-link" th:href="@{/way/info}">Info Parcour</a></li>
 		</ul>
 	</div>
 	<div class="collapse navbar-collapse" sec:authorize="isAuthenticated()">

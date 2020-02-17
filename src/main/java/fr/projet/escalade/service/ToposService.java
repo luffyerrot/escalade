@@ -25,7 +25,6 @@ public class ToposService extends CustomUserDetailsService{
 	}
 	
 	public Topos save(Topos topos) {
-		System.out.println("ToposService : " + topos);
 		return toposRepository.save(topos);
 	}
 }

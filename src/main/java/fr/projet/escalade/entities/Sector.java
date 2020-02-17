@@ -14,6 +14,9 @@ public class Sector implements Serializable{
     @Column(name = "id")
     private Long id;
 	
+	@Column(nullable=false, unique=true)
+    private String name;
+	
 	@Column(nullable=false, unique=false)
     private Integer global_length;
 	
@@ -30,9 +33,6 @@ public class Sector implements Serializable{
 	@JoinColumn(name = "user_id")
     private User user;
 	
-	@OneToMany(mappedBy = "sector") 
-    private List <Comment> comments;
-	
 	@OneToMany(mappedBy="sector")
 	private List<Way> ways;
 
@@ -44,6 +44,14 @@ public class Sector implements Serializable{
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Integer getGlobal_length() {
@@ -84,13 +92,5 @@ public class Sector implements Serializable{
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	public List<Comment> getComments() {
-		return comments;
-	}
-
-	public void setComments(List<Comment> comments) {
-		this.comments = comments;
 	}
 }

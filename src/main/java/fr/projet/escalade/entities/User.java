@@ -1,14 +1,11 @@
 package fr.projet.escalade.entities;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "users")
@@ -41,16 +38,19 @@ public class User implements Serializable {
        inverseJoinColumns={@JoinColumn(name="role_id", referencedColumnName="id")})
     private List <Role> roles;
 	
-	@OneToMany(mappedBy = "user", cascade=CascadeType.ALL)
-    private Collection <Topos> topos;
+	@OneToMany(mappedBy = "user")
+    private List <Topos> topos;
 	
-	@OneToMany(mappedBy = "user", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "user")
     private List <Sector> sectors;
 	
-	@OneToMany(mappedBy = "user", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "user")
+    private List <Way> ways;
+	
+	@OneToMany(mappedBy = "user")
     private List <Comment> comments;
 	
-	@OneToMany(mappedBy = "user", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "user")
     private List <Booking> bookings;
     
     //----------------------------------------------------------------------------------
@@ -95,11 +95,11 @@ public class User implements Serializable {
 		this.roles = roles;
 	}
 
-	public Collection<Topos> getTopos() {
+	public List<Topos> getTopos() {
 		return topos;
 	}
 
-	public void setTopos(Collection<Topos> topos) {
+	public void setTopos(List<Topos> topos) {
 		this.topos = topos;
 	}
 

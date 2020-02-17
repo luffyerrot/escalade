@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head th:insert="fragments/head.html">
+	<meta charset="UTF-8"/>
+	<title>Modification de secteur</title>
+</head>
+<body>
+	<header th:insert="fragments/header.html"></header>
+	<div align="center">
+		<div class="container card">
+			<h1>Modifier le secteur</h1>
+			<form action="#" th:action="@{/sector/update}" th:objet="${sector}" method="post" id="formSector">
+				<input type="hidden" th:name="id" th:value="${sectors.id}"></input>
+				<div class="form-group">
+					<label>Nom :</label>
+					<input type="text" th:name="name" placeholder="Le nom du Secteur" th:value="${sectors.name}" autofocus class="form-control"/>
+				</div>
+				<br/>
+				<div class="form-group">
+					<label>Taille total :</label>
+					<input type="text" th:name="global_length" placeholder="La taille total" th:value="${sectors.global_length}" class="form-control"/>
+				</div>
+				<br/>
+				<div class="form-group">
+					<label>Type :</label>
+					<input type="text" th:name="type" placeholder="Le type de terrain" th:value="${sectors.type}" class="form-control"/>
+				</div>
+				<br/>
+				<input type="submit" value="Envoyer"  class="btn btn-outline-secondary" id="link"/>
+				<br/>
+			</form>
+			<div class="form-group">
+				<br/>
+				<label>Choisir un topos :</label>
+				<select th:name="topos" form="formSector">
+					<option th:value="${sectors?.topos?.id}" th:text="${sectors?.topos?.name}">...</option>
+					<option th:value="${null}">--------------------</option>
+			  		<option th:each="topo : ${topos}" th:value="${topo.id}" th:text="${topo.name}">...</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<div th:insert="fragments/footer.html"></div>
+</body>
+</html>

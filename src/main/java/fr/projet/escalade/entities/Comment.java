@@ -34,8 +34,8 @@ public class Comment implements Serializable{
     private User user;
 	
 	@ManyToOne
-	@JoinColumn(name = "sector_id")
-    private Sector sector;
+	@JoinColumn(name = "topos_id")
+    private Topos topos;
 
 	//---------------------------------------------------------------------------------
 
@@ -71,11 +71,11 @@ public class Comment implements Serializable{
 		this.user = user;
 	}
 
-	public Sector getSector() {
-		return sector;
+	public Topos getTopos() {
+		return topos;
 	}
 
-	public void setSector(Sector sector) {
-		this.sector = sector;
+	public void setTopos(Topos topos) {
+		this.topos = topos;
 	}
 }

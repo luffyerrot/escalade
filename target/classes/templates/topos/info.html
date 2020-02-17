@@ -2,25 +2,23 @@
 <html xmlns:th="www.thymeleaf.org">
 <head th:insert="fragments/head.html">
 	<meta charset="UTF-8"/>
-	<title>Info</title>
+	<title>Info topos</title>
 </head>
 <body>
 	<header th:insert="fragments/header.html"></header>
 	<div align="center">
-		<h1><b>Mes informations :</b></h1>
+		<h1><b>Mes Topos :</b></h1>
 		<br/>
 		<div class="container card">
 			<div th:if="${param.creatopos == null}">
 				<table class="table table-dark">
 					<thead>
 						<tr>
-							<th scope="col">Mes topos</th>
-						</tr>
-						<tr>
 							<th scope="col">Nom</th>
 							<th scope="col">Lieu</th>
 							<th scope="col">Description</th>
 							<th scope="col">Date</th>
+							<th scope="col">Modifier</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -29,31 +27,13 @@
 					        <td th:text="${topo.place}">...</td>
 					        <td th:text="${topo.description}">...</td>
 					        <td th:text="${topo.date}">...</td>
-					    </tr>
-				    </tbody>
-				</table>
-				<br/>
-				<table class="table table-dark">
-					<thead>
-						<tr>
-							<th scope="col">Mes secteurs</th>
-						</tr>
-						<tr>
-							<th scope="col">Taille</th>
-							<th scope="col">Type</th>
-						</tr>
-					</thead>
-					<tbody>
-					    <tr th:each="sector : ${sectors}">
-					        <td th:text="${sector.global_length}">...</td>
-					        <td th:text="${sector.type}">...</td>
+					        <td><a class="btn btn-outline-secondary" th:href="@{/topos/update(idTopos = ${topo.id})}">Modifier</a></td>
 					    </tr>
 				    </tbody>
 				</table>
 				<br/>
 				<p align="center" sec:authorize="isAuthenticated()">
 					<a th:href="@{/topos/create}" class="btn btn-outline-secondary">Créer un topos</a>
-					<a th:href="@{/topos/sectorcreate}" class="btn btn-outline-secondary">Créer un secteur</a>
 				</p>
 	  		</div>	
 		</div>
