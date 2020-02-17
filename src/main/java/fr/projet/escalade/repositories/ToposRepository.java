@@ -11,4 +11,6 @@ import fr.projet.escalade.entities.Topos;
 public interface ToposRepository extends JpaRepository<Topos, Long>{
 
 	public List<Topos> findByUserId(Long id);
+	
+	public List<Topos> findAllByOfficial(Boolean official);
 }

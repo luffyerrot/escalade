@@ -10,7 +10,8 @@
 		<h1><b>Edition de Profil :</b></h1>
 		<br/>
 		<div class="container card" align="center">
-			<form action="#" th:action="@{update}" th:objet="${user}" method="post" th:each="user : ${users}">
+			<form action="#" th:action="@{/user/update}" th:objet="${user}" method="post" th:each="user : ${users}">
+				<input type="hidden" th:name="id" th:value="${user.id}"/>
 				<div class="form-group">
 					<label>Pseudo :</label>
 					<input type="text" th:name="username" placeholder="Votre pseudo" class="form-control" th:value="${user.username}"/>

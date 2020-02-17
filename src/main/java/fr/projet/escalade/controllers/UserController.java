@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import fr.projet.escalade.entities.Comment;
+import fr.projet.escalade.entities.Topos;
 import fr.projet.escalade.entities.User;
+import fr.projet.escalade.service.ToposService;
 import fr.projet.escalade.service.UserService;
 
 @Controller
@@ -20,7 +23,8 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
-	
+	@Autowired
+	ToposService toposService;
 	@Autowired
 	PasswordEncoder passwordEncoder;
 	
@@ -38,13 +42,6 @@ public class UserController {
 	    	return new ModelAndView("redirect:/", model);
 	    }
 	}
-	
-	@RequestMapping(value = "/detail", method = RequestMethod.POST)
-	public ModelAndView detailPost(ModelMap model) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		model.addAttribute("users", userService.getIdByName(auth.getName()));
-	    return new ModelAndView("user/detail", model);
-	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	public ModelAndView updateGet(ModelMap model) {
@@ -55,13 +52,10 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public ModelAndView updatePost(ModelMap model) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Long id = userService.getIdByName(auth.getName());
-		User user = userService.getById(id);
+	public ModelAndView updatePost(@ModelAttribute("user") User user, ModelMap model) {
 		user.setPassword(user.getPassword());
 		userService.save(user);
 		model.addAttribute("users", user);
-	    return new ModelAndView("user/update", model);
+    	return new ModelAndView("user/detail", model);
 	}
 }

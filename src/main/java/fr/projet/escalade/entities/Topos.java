@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 @Entity
 @Table(name = "topos")
 public class Topos implements Serializable{
@@ -29,6 +27,9 @@ public class Topos implements Serializable{
 	
 	@Column(nullable=true, unique=false)
 	private String date;
+	
+	@Column(nullable=false, unique=false)
+	private Boolean official;
 
 	//---------------------------------------------------------------------------------
 	
@@ -132,5 +133,13 @@ public class Topos implements Serializable{
 
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
+	}
+
+	public Boolean getOfficial() {
+		return official;
+	}
+
+	public void setOfficial(Boolean official) {
+		this.official = official;
 	}
 }

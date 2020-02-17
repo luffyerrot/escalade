@@ -16,21 +16,21 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 						<tr>
 							<th scope="col">Pseudo</th>
 							<th scope="col">Mail</th>
-							<th scope="col">Detail</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr th:each="user : ${users}">
 					        <td th:text="${user.username}">...</td>
 					        <td th:text="${user.email}">...</td>
-					        <td>
-					        	<div id="link">
-					        		<a th:href="@{/user/detail}" class="btn btn-outline-secondary">Détails</a>
-					        	</div>
-					        </td>
 					    </tr>
 				    </tbody>
 				</table>
+				<br>
+				<div align="center" sec:authorize="isAuthenticated()">
+					<a th:href="@{/user/detail}" class="btn btn-outline-secondary">Détails</a>
+					<br/><br/>
+					<a th:href="@{/toposAll}" class="btn btn-outline-secondary">Voir tous les Topos</a>
+				</div>
 			</div>
 		</div>
 	</div>

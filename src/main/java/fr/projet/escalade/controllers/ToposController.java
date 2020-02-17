@@ -43,7 +43,7 @@ public class ToposController {
 	public ModelAndView createPost(@ModelAttribute("topos") Topos topos, ModelMap model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Long id = userService.getIdByName(auth.getName());
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		Date date = new Date();
 		User user = userService.getById(id);
 		topos.setUser(user);
@@ -60,6 +60,21 @@ public class ToposController {
 	public ModelAndView infoGet(ModelMap model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Long id = userService.getIdByName(auth.getName());
+		try {
+			model.addAttribute("topos", toposService.getByUserId(id));
+		}catch(NoSuchElementException e) {
+		}
+	    return new ModelAndView("topos/info", model);
+	}
+	
+	@RequestMapping(value = "/info", method = RequestMethod.POST)
+		public ModelAndView infoPost(@ModelAttribute("topos") Topos topos, ModelMap model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Long id = userService.getIdByName(auth.getName());
+		User user = userService.getById(id);
+		topos.setUser(user);
+		toposService.save(topos);
+		model.addAttribute("users", userService.getIdByName(auth.getName()));
 		try {
 			model.addAttribute("topos", toposService.getByUserId(id));
 		}catch(NoSuchElementException e) {

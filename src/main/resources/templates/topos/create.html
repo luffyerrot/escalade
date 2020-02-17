@@ -11,6 +11,7 @@
 			<h1>Créer un topos</h1>
 			<form action="#" th:action="@{/topos/create}" th:objet="${topos}" method="post" id="formTopos">
 				<input type="hidden" th:name="reserved" th:value="false"></input>
+				<input type="hidden" th:name="official" th:value="false"></input>
 				<div class="form-group">
 					<label>Nom :</label>
 					<input type="text" th:name="name" placeholder="Le nom du Topos" autofocus class="form-control"/>

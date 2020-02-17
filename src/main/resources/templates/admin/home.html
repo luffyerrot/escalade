@@ -13,9 +13,9 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 			<div class="card-body">
 				<p>Vous êtes dans le Home des admins ! </p>
 			</div>
+		<a class="nav-link" th:href="@{/admin/topos/info}">Info Topos</a>
 		</div>
 	</div>
-	<p align="center" sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></p>
 	<div th:insert="fragments/footer.html"></div>
 </body>
 </html>

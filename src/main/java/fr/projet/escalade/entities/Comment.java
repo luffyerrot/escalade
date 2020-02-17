@@ -1,7 +1,6 @@
 package fr.projet.escalade.entities;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,7 +24,7 @@ public class Comment implements Serializable{
     private String comment;
 	
 	@Column(nullable=false, unique=false)
-    private Timestamp release_date;
+    private String release_date;
 	
 	//---------------------------------------------------------------------------------
 	   
@@ -54,12 +53,12 @@ public class Comment implements Serializable{
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-	  
-	public Timestamp getRelease_date() {
+
+	public String getRelease_date() {
 		return release_date;
 	}
 
-	public void setRelease_date(Timestamp release_date) {
+	public void setRelease_date(String release_date) {
 		this.release_date = release_date;
 	}
 

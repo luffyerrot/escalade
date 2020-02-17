@@ -27,4 +27,12 @@ public class ToposService extends CustomUserDetailsService{
 	public Topos save(Topos topos) {
 		return toposRepository.save(topos);
 	}
+	
+	public List<Topos> getAll() {
+		return toposRepository.findAll();
+	}
+	
+	public List<Topos> getAllOfficial(Boolean official) {
+		return toposRepository.findAllByOfficial(official);
+	}
 }
