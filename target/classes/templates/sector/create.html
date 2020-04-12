@@ -6,31 +6,43 @@
 </head>
 <body>
 	<header th:insert="fragments/header.html"></header>
-	<div align="center">
-		<div class="container card">
-			<h1>Créer un secteur</h1>
-			<form action="#" th:action="@{/sector/create}" th:objet="${sector}" method="post" id="formSector">
-				<div class="form-group">
-					<label>Taille total :</label>
-					<input type="text" th:name="global_length" placeholder="La taille total du secteur (en km²)" autofocus class="form-control"/>
+	<div class="container" align="center">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<h2 class="card-title">Créer un secteur</h2>
+					<div class="card-body">
+						<form action="#" th:action="@{/sector/create}" th:objet="${sector}" method="post" id="formSector">
+							<div class="form-group">
+								<label>Name :</label>
+								<input type="text" th:name="name" placeholder="La nom du secteur" autofocus class="form-control"/>
+							</div>
+							<br/>
+							<div class="form-group">
+								<label>Taille total :</label>
+								<input type="text" th:name="global_length" placeholder="La taille total du secteur (en km²)" autofocus class="form-control"/>
+							</div>
+							<br/>
+							<div class="form-group">
+								<label>Type de secteur :</label>
+								<input type="text" th:name="type" placeholder="Le type de secteur" class="form-control"/>
+							</div>
+							<br/>
+							<label>Choisir un topos :</label>
+							<select th:name="topos" form="formSector">
+								<option th:value="${null}">--------------------</option>
+								<option th:each="topo : ${topos}" th:value="${topo.id}" th:text="${topo.name}">...</option>
+							</select>
+							<br/><br/>
+							<input type="submit" value="Envoyer"  class="btn btn-outline-secondary" id="link"/>
+							<br/><br/>
+						</form>
+					</div>
 				</div>
-				<br/>
-				<div class="form-group">
-					<label>Type de secteur :</label>
-					<input type="text" th:name="type" placeholder="Le type de secteur" class="form-control"/>
-				</div>
-				<br/>
-				<input type="submit" value="Envoyer"  class="btn btn-outline-secondary" id="link"/>
-				<br/>
-			</form>
-			<label>Choisir un topos :</label>
-			<select th:name="topos" form="formSector">
-				<option th:value="${null}">--------------------</option>
-				<option th:each="topo : ${topos}" th:value="${topo.id}" th:text="${topo.name}">...</option>
-			</select>
-			<br/>
+			</div>
 		</div>
 	</div>
+	<div th:insert="fragments/script.html"></div>
 	<div th:insert="fragments/footer.html"></div>
 </body>
 </html>

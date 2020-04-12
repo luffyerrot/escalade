@@ -7,33 +7,45 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 </head>
 <body>
 	<header th:insert="fragments/header.html"></header>
-	<div align="center">
-		<h1 class="card_tittle"><b>Profils</b></h1>
-		<div class="container card">
-			<div class="card-body">
-				<table class="table table-dark">
-					<thead>
-						<tr>
-							<th scope="col">Pseudo</th>
-							<th scope="col">Mail</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="user : ${users}">
-					        <td th:text="${user.username}">...</td>
-					        <td th:text="${user.email}">...</td>
-					    </tr>
-				    </tbody>
-				</table>
-				<br>
-				<div align="center" sec:authorize="isAuthenticated()">
-					<a th:href="@{/user/detail}" class="btn btn-outline-secondary">Détails</a>
-					<br/><br/>
-					<a th:href="@{/toposAll}" class="btn btn-outline-secondary">Voir tous les Topos</a>
+	<div class="container" align="center">
+		<div class="row">
+			<div class="col-md-12">
+				<h1><b>Profils</b></h1>
+				<div class="card">
+					<h2 class="card-title">Les réservations</h2>
+					<div class="card-body">
+						<div sec:authorize="isAuthenticated()">
+							<table class="table table-dark table-responsive">
+								<tr>
+									<th scope="col">Utilisateur</th>
+									<th scope="col">Nom du topos</th>
+									<th scope="col">Réservation accepter</th>
+								</tr>
+								<tr th:each="booking : ${bookings}">
+							        <td th:text="${booking?.user?.username}">...</td>
+							        <td th:text="${booking?.topos?.name}">...</td>
+							        <td>
+								        <div th:switch="${booking?.accepted}">
+											<div th:case="true"><img alt="true" src="/image/true.png"></div>
+											<div th:case="false"><img alt="false" src="/image/false.png"></div>
+										</div>
+									</td>
+							    </tr>
+							</table>
+						</div>
+						<br>
+						<div sec:authorize="isAuthenticated()">
+							<a th:href="@{/user/detail}" class="btn btn-outline-secondary">Détails</a>
+							<br/><br/>
+							<a th:href="@{/toposAll}" class="btn btn-outline-secondary">Voir tous les Topos</a>
+						</div>
+						<br/>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<div th:insert="fragments/script.html"></div>
 	<div th:insert="fragments/footer.html"></div>
 </body>
 </html>

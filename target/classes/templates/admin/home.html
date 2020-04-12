@@ -7,15 +7,20 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 </head>
 <body>
 	<header th:insert="fragments/header.html"></header>
-	<div align="center">
-		<h1 class="card_tittle"><b>Admin Profils</b></h1>
-		<div class="container card">
-			<div class="card-body">
-				<p>Vous êtes dans le Home des admins ! </p>
+	<div class="container" align="center">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<h2 class="card_tittle"><b>Admin Profils</b></h2>
+					<div class="card-body">
+						<p>Vous êtes dans le Home des admins ! </p>
+						<a class="nav-link" th:href="@{/admin/topos/info}">Info Topos</a>
+					</div>
+				</div>
 			</div>
-		<a class="nav-link" th:href="@{/admin/topos/info}">Info Topos</a>
 		</div>
 	</div>
+	<div th:insert="fragments/script.html"></div>
 	<div th:insert="fragments/footer.html"></div>
 </body>
 </html>

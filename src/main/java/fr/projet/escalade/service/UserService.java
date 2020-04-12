@@ -1,11 +1,18 @@
 package fr.projet.escalade.service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import fr.projet.escalade.entities.Role;
 import fr.projet.escalade.entities.User;
 import fr.projet.escalade.repositories.UserRepository;
 import fr.projet.escalade.security.CustomUserDetailsService;
@@ -15,25 +22,77 @@ public class UserService extends CustomUserDetailsService{
 
 	@Autowired
 	UserRepository userRepository;
+
+	@Autowired
+	RoleService roleService;
+	
+	@Autowired
+	PasswordEncoder passwordEncoder;
+
+	Logger logger = LoggerFactory.getLogger(ToposService.class);
 	
 	public User getById(Long id) {
-		return userRepository.findById(id).get();
+		this.logger.debug("getById Call = " + id);
+		User user = userRepository.findById(id).get();
+		this.logger.debug("getById Return = " + user);
+		return user;
 	}
 	
 	public User save(User user) {
-		return userRepository.save(user);
+		this.logger.debug("save Call = " + user);
+		User userreturn = userRepository.save(user);
+		this.logger.debug("save Return = " + userreturn);
+		return userreturn;
 	}
 	
 	public List<User> findAll() {
-		return userRepository.findAll();
+		List<User> user = userRepository.findAll();
+		this.logger.debug("findAll Return = " + user);
+		return user;
 	}
-	
+
 	public Long getIdByName(String name) {
+		this.logger.debug("getIdByName Call = " + name);
 		try {
-			return userRepository.findByEmail(name).get().getId();
+			Long namereturn = userRepository.findByEmail(name).get().getId();
+			this.logger.debug("getIdByName Return = " + namereturn);
+			return namereturn; 
 		} catch (NoSuchElementException e) {
 			Long noId = Integer.toUnsignedLong(0);
+			this.logger.debug("getIdByName Try Catch Return = " + noId);
 			return noId;
 		}
+	}
+	
+	public Authentication auth() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		this.logger.debug("auth Return = " + auth);
+		return auth;
+	}
+	
+	public Long authUserId() {
+		Long id = getIdByName(auth().getName());
+		this.logger.debug("authUserId Return = " + id);
+		return id;
+	}
+	
+	public User authUser() {
+		User user = getById(authUserId());
+		this.logger.debug("authUser Return = " + user);
+		return user;
+	}
+	
+	public void updateUser(Long idUser, String username, String email) {
+		this.logger.debug("updateUser Call = " + idUser + " " + username + " " + email);
+		userRepository.updateUser(idUser, username, email);
+	}
+	
+	public void create(User user) {
+		this.logger.debug("create Call = " + user);
+		user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+		Role role = roleService.findByName("ROLE_USER");
+		this.logger.debug("create Role = " + role);
+		user.setRoles(Arrays.asList(role));
+		save(user);
 	}
 }

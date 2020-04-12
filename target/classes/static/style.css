@@ -1,41 +1,18 @@
 html, body {
+	width: 100%;
 	height: 100%;
-	margin: 0;
-	padding: 0;
 }
 
-body {
-	display: table;
-	position: relative;
+header {
 	width: 100%;
-	padding-bottom: 5em;
 }
 
 footer {
-	background-color: grey;
-	display: table-row;
-	height: 60px;
-	position: absolute;
 	bottom: 0;
-	left: 0;
-	right: 0;
+	width: 100%;
+	position: absolute;
 }
 
-* {
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-}
-
-form {
-	margin: 200px;
-	margin-top: 2px;
-	margin-bottom: 2px;
-}
-
-.container {
-	margin-top: 20px;
-}
-
-.link {
-	width: 30px;
+div {
+	display: block;
 }

@@ -1,6 +1,7 @@
 package fr.projet.escalade.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
@@ -13,7 +14,7 @@ public class Topos implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 	
-	@Column(nullable=false, unique=true)
+	@Column(nullable=false, unique=false)
     private String name;
 	
 	@Column(nullable=false, unique=false)
@@ -22,14 +23,20 @@ public class Topos implements Serializable{
 	@Column(nullable=false)
     private Boolean reserved;
 	
+	@Column(nullable=false)
+    private Boolean published;
+	
 	@Column(nullable=false, unique=false)
     private String description;
 	
 	@Column(nullable=true, unique=false)
-	private String date;
+	private Date date;
 	
 	@Column(nullable=false, unique=false)
 	private Boolean official;
+	
+	@Column(nullable=false, unique=false)
+	private Boolean request;
 
 	//---------------------------------------------------------------------------------
 	
@@ -119,14 +126,6 @@ public class Topos implements Serializable{
 		this.sectors = sectors;
 	}
 
-	public String getDate() {
-		return date;
-	}
-
-	public void setDate(String date) {
-		this.date = date;
-	}
-
 	public List<Comment> getComments() {
 		return comments;
 	}
@@ -141,5 +140,29 @@ public class Topos implements Serializable{
 
 	public void setOfficial(Boolean official) {
 		this.official = official;
+	}
+
+	public Boolean getPublished() {
+		return published;
+	}
+
+	public void setPublished(Boolean published) {
+		this.published = published;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public Boolean getRequest() {
+		return request;
+	}
+
+	public void setRequest(Boolean request) {
+		this.request = request;
 	}
 }

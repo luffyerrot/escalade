@@ -6,36 +6,43 @@
 </head>
 <body>
 	<header th:insert="fragments/header.html"></header>
-	<div align="center">
-		<div class="container card">
-			<h1>Créer un parcour</h1>
-			<form action="#" th:action="@{/way/create}" th:objet="${way}" method="post" id="formWay">
-				<div class="form-group">
-					<label>Longueur :</label>
-					<input type="text" th:name="length" placeholder="La longeur du parcour (en km)" autofocus class="form-control"/>
+	<div class="container" align="center">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<h2 class="card-title">Créer un parcour</h2>
+					<div class="card-body">
+						<form action="#" th:action="@{/way/create}" th:objet="${way}" method="post" id="formWay">
+							<div class="form-group">
+								<label>Longueur :</label>
+								<input type="text" th:name="length" placeholder="La longeur du parcour (en km)" autofocus class="form-control"/>
+							</div>
+							<br/>
+							<div class="form-group">
+								<label>Niveau de difficulté :</label>
+								<input type="text" th:name="difficulty" placeholder="La difficulté du parcour (de 0 à 9)" class="form-control"/>
+							</div>
+							<br/>
+							<label>Choisir un secteur :</label>
+							<select th:name="sector" form="formWay">
+							<option th:value="${null}">--------------------</option>
+							<option th:each="sector : ${sectors}" th:value="${sector.id}" th:text="${sector.name}">...</option>
+							</select>
+							<br/><br/>
+							<div class="form-group">
+								<label>Description :</label>
+								<textarea th:name="description" placeholder="La description du parcour" class="form-control" form="formWay"></textarea>
+							</div>
+							<br/>
+							<input type="submit" value="Envoyer"  class="btn btn-outline-secondary" id="link"/>
+							<br/><br/>
+						</form>
+					</div>
 				</div>
-				<br/>
-				<div class="form-group">
-					<label>Niveau de difficulté :</label>
-					<input type="text" th:name="difficulty" placeholder="La difficulté du parcour (de 0 à 9)" class="form-control"/>
-				</div>
-				<br/>
-				<input type="submit" value="Envoyer"  class="btn btn-outline-secondary" id="link"/>
-				<br/>
-			</form>
-			<label>Choisir un secteur :</label>
-			<select th:name="sector" form="formWay">
-				<option th:value="${null}">--------------------</option>
-				<option th:each="sector : ${sectors}" th:value="${sector.id}" th:text="${sector.name}">...</option>
-			</select>
-			<br/>
-			<div class="form-group">
-				<label>Description :</label>
-				<textarea th:name="description" placeholder="La description du parcour" class="form-control" form="formWay"></textarea>
 			</div>
-			<br/>
 		</div>
 	</div>
+	<div th:insert="fragments/script.html"></div>
 	<div th:insert="fragments/footer.html"></div>
 </body>
 </html>

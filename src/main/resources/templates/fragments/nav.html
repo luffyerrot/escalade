@@ -1,24 +1,36 @@
-<nav class="navbar navbar-expand-sm navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
 	<a class="navbar-brand" th:href="@{/}">Home</a>
 	<div sec:authorize="hasRole('ROLE_ADMIN')">
 		<a class="navbar-brand" th:href="@{/admin/}">AdminHome</a>
 	</div>
-	<div sec:authorize="hasRole('ROLE_USER')">
-		<ul class="navbar-nav mr-auto">
-			<li class="nav-item"><a class="nav-link" th:href="@{/topos/info}">Info Topos</a></li>
-			<li class="nav-item"><a class="nav-link" th:href="@{/sector/info}">Info Secteur</a></li>
-			<li class="nav-item"><a class="nav-link" th:href="@{/way/info}">Info Parcour</a></li>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    	<span class="navbar-toggler-icon"></span>
+    </button>
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<div sec:authorize="hasRole('ROLE_USER')">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item dropdown">
+			        <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestion</a>
+			        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+			        	<a class="dropdown-item" th:href="@{/topos/info}">Info Topos</a>
+			       		<div class="dropdown-divider"></div>
+			        	<a class="dropdown-item" th:href="@{/sector/info}">Info Secteur</a>
+			        	<a class="dropdown-item" th:href="@{/way/info}">Info Parcour</a>
+			        </div>
+				</li>
+			</ul>
+		</div>
+		<ul class="navbar-nav mr-auto" sec:authorize="isAuthenticated()">	
+			<li class="nav-item" active><a class="nav-link" th:href="@{/logout}">Logout</a></li>
 		</ul>
-	</div>
-	<div class="collapse navbar-collapse" sec:authorize="isAuthenticated()">
-		<ul class="navbar-nav mr-auto">
-			<li class="nav-item"><a class="nav-link" th:href="@{/logout}">Logout</a></li>
-		</ul>
-	</div>
-	<div class="collapse navbar-collapse" sec:authorize="!isAuthenticated()">
-		<ul class="navbar-nav mr-auto">
+		<ul class="navbar-nav mr-auto" sec:authorize="!isAuthenticated()">
 			<li class="nav-item"><a class="nav-link" th:href="@{/create}">Inscription</a></li>
-			<li class="nav-item"><a class="nav-link" th:href="@{/login}">Connection</a></li>
+			<li class="nav-item" active><a class="nav-link" th:href="@{/login}">Connection</a></li>
 		</ul>
+		<form class="form-inline my-2 my-lg-0" th:action="@{/toposAll}" method="get" id="formSearch">
+			<input class="form-control mr-sm-2" type="search" placeholder="Le pseudo" th:name="username"/>
+			<input class="form-control mr-sm-2" type="search" placeholder="le nom du topos" th:name="toposname"/>
+			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Chercher</button>
+		</form>
 	</div>
 </nav>

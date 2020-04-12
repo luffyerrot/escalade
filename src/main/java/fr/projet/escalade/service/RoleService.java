@@ -1,5 +1,7 @@
 package fr.projet.escalade.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +14,13 @@ public class RoleService extends CustomUserDetailsService{
 
 	@Autowired
 	RoleRepository roleRepository;
+
+	Logger logger = LoggerFactory.getLogger(ToposService.class);
 	
 	public Role findByName(String name) {
-		return roleRepository.findByName(name);
+		this.logger.debug("findByName Call = " + name);
+		Role role = roleRepository.findByName(name);
+		this.logger.debug("findByName Return = " + role);
+		return role;
 	}
 }

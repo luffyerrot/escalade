@@ -1,6 +1,7 @@
 package fr.projet.escalade.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,7 +25,7 @@ public class Comment implements Serializable{
     private String comment;
 	
 	@Column(nullable=false, unique=false)
-    private String release_date;
+    private Date release_date;
 	
 	//---------------------------------------------------------------------------------
 	   
@@ -54,14 +55,6 @@ public class Comment implements Serializable{
 		this.comment = comment;
 	}
 
-	public String getRelease_date() {
-		return release_date;
-	}
-
-	public void setRelease_date(String release_date) {
-		this.release_date = release_date;
-	}
-
 	public User getUser() {
 		return user;
 	}
@@ -76,5 +69,13 @@ public class Comment implements Serializable{
 
 	public void setTopos(Topos topos) {
 		this.topos = topos;
+	}
+
+	public Date getRelease_date() {
+		return release_date;
+	}
+
+	public void setRelease_date(Date release_date) {
+		this.release_date = release_date;
 	}
 }

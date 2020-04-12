@@ -3,8 +3,6 @@ package fr.projet.escalade.controllers;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import fr.projet.escalade.entities.Sector;
-import fr.projet.escalade.entities.User;
 import fr.projet.escalade.service.SectorService;
 import fr.projet.escalade.service.ToposService;
 import fr.projet.escalade.service.UserService;
@@ -32,10 +29,8 @@ public class SectorController {
 	
 	@RequestMapping(value = "/info", method = RequestMethod.GET)
 	public ModelAndView infoGet(ModelMap model) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Long id = userService.getIdByName(auth.getName());
 		try {
-			model.addAttribute("sectors", sectorService.getByUserId(id));
+			model.addAttribute("sectors", sectorService.getByUserId(userService.authUserId()));
 		}catch(NoSuchElementException e) {
 		}
 	    return new ModelAndView("sector/info", model);
@@ -43,48 +38,34 @@ public class SectorController {
 	
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView sectorcreateGet(ModelMap model) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Long id = userService.getIdByName(auth.getName());
-		model.addAttribute("users", userService.getById(id));
-		model.addAttribute("topos", toposService.getByUserId(id));
+		model.addAttribute("users", userService.getById(userService.authUserId()));
+		model.addAttribute("topos", toposService.getByUserId(userService.authUserId()));
 	    return new ModelAndView("sector/create", model);
 	}
 	
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public ModelAndView sectorcreatePost(@ModelAttribute("sector") Sector sector, ModelMap model) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Long id = userService.getIdByName(auth.getName());
-		User user = userService.getById(id);
-		sector.setUser(user);
-		sectorService.save(sector);
-		try {
-			model.addAttribute("sectors", sectorService.getByUserId(id));
-		}catch(NoSuchElementException e) {
+		sectorService.create(sector, userService.authUser());
+		if (sectorService.getByUserId(userService.authUserId()) != null) {
+			model.addAttribute("sectors", sectorService.getByUserId(userService.authUserId()));
 		}
-	    return new ModelAndView("sector/info", model);
+	    return new ModelAndView("redirect:/sector/info", model);
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	public ModelAndView updateGet(ModelMap model, @RequestParam(name="idSector", required = true) Long idSector) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Long id = userService.getIdByName(auth.getName());
-		model.addAttribute("topos", toposService.getByUserId(id));
+		model.addAttribute("topos", toposService.getByUserId(userService.authUserId()));
 		model.addAttribute("sectors", sectorService.getById(idSector));
-		model.addAttribute("users", userService.getById(id));
+		model.addAttribute("users", userService.getById(userService.authUserId()));
 	    return new ModelAndView("sector/update", model);
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public ModelAndView updatePost(@ModelAttribute("sector") Sector sector, ModelMap model) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Long id = userService.getIdByName(auth.getName());
-		User user = userService.getById(id);
-		sector.setUser(user);
-		sectorService.save(sector);
-		try {
-			model.addAttribute("sectors", sectorService.getByUserId(id));
-		}catch(NoSuchElementException e) {
+		sectorService.updateSector(sector.getId(), sector.getName(), sector.getGlobal_length(), sector.getType(), sector.getTopos());
+		if(sectorService.getByUserId(userService.authUserId()) != null) {
+			model.addAttribute("sectors", sectorService.getByUserId(userService.authUserId()));
 		}
-	    return new ModelAndView("sector/info", model);
+	    return new ModelAndView("redirect:/sector/info", model);
 	}
 }

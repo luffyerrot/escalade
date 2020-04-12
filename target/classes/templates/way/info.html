@@ -6,36 +6,43 @@
 </head>
 <body>
 	<header th:insert="fragments/header.html"></header>
-	<div align="center">
-		<h1><b>Mes parcours :</b></h1>
-		<br/>
-		<div class="container card">
-			<table class="table table-dark">
-				<thead>
-					<tr>
-						<th scope="col">Longeur</th>
-						<th scope="col">Difficulté</th>
-						<th scope="col">Description</th>
-						<th scope="col">Secteur</th>
-						<th scope="col">Modifier</th>
-					</tr>
-				</thead>
-				<tbody>
-				    <tr th:each="way : ${ways}">
-				        <td th:text="${way.length}">...</td>
-				        <td th:text="${way.difficulty}">...</td>
-				        <td th:text="${way.description}">...</td>
-				        <td th:text="${way.sector != null} ? ${way.sector.name} : 'aucun parcour'">...</td>
-					    <td><a class="btn btn-outline-secondary" th:href="@{/way/update(idWay = ${way.id})}">Modifier</a></td>
-				    </tr>
-			    </tbody>
-			</table>
-			<br/>
-			<p align="center" sec:authorize="isAuthenticated()">
-				<a th:href="@{/way/create}" class="btn btn-outline-secondary">Créer un parcour</a>
-			</p>
-  		</div>	
+	<div class="container" align="center">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<h2 class="card-title"><b>Mes parcours :</b></h2>
+					<br/>
+					<div class="card-body">
+						<table class="table table-dark table-responsive">
+							<thead>
+								<tr>
+									<th scope="col">Longeur</th>
+									<th scope="col">Difficulté</th>
+									<th scope="col">Description</th>
+									<th scope="col">Secteur</th>
+									<th scope="col">Modifier</th>
+								</tr>
+							</thead>
+							<tbody>
+							    <tr th:each="way : ${ways}">
+							        <td th:text="${way.length}">...</td>
+							        <td th:text="${way.difficulty}">...</td>
+							        <td th:text="${way.description}">...</td>
+							        <td th:text="${way.sector != null} ? ${way.sector.name} : 'aucun parcour'">...</td>
+								    <td><a class="btn btn-outline-secondary" th:href="@{/way/update(idWay = ${way.id})}">Modifier</a></td>
+							    </tr>
+						    </tbody>
+						</table>
+						<br/>
+						<p align="center" sec:authorize="isAuthenticated()">
+							<a th:href="@{/way/create}" class="btn btn-outline-secondary">Créer un parcour</a>
+						</p>
+			  		</div>	
+		  		</div>
+	  		</div>
+  		</div>
 	</div>
+	<div th:insert="fragments/script.html"></div>
 	<div th:insert="fragments/footer.html"></div>
 </body>
 </html>

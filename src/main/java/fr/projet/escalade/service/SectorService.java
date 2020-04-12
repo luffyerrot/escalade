@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import fr.projet.escalade.entities.Sector;
+import fr.projet.escalade.entities.Topos;
+import fr.projet.escalade.entities.User;
 import fr.projet.escalade.repositories.SectorRepository;
 import fr.projet.escalade.security.CustomUserDetailsService;
 
@@ -23,7 +25,20 @@ public class SectorService extends CustomUserDetailsService{
 		return sectorRepository.findByUserId(id);
 	}
 	
+	public List<Sector> getByToposId(Long id) {
+		return sectorRepository.findByToposId(id);
+	}
+	
 	public Sector save(Sector topos) {
 		return sectorRepository.save(topos);
+	}
+	
+	public void create(Sector sector, User user) {
+		sector.setUser(user);
+		save(sector);
+	}
+	
+	public void updateSector(Long idSector, String name, Integer global_length, String type, Topos topos) {
+		sectorRepository.updateSector(idSector, name, global_length, type, topos);
 	}
 }

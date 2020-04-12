@@ -6,32 +6,59 @@
 </head>
 <body>
 	<header th:insert="fragments/header.html"></header>
-	<div align="center">
-		<h1><b>Les Topos :</b></h1>
-		<br/>
-		<div class="container card">
-				<table class="table table-dark">
-					<thead>
-						<tr>
-							<th scope="col">Nom</th>
-							<th scope="col">Lieu</th>
-							<th scope="col">Description</th>
-							<th scope="col">Date</th>
-							<th scope="col">Détail</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="topo : ${topos}">
-					        <td th:text="${topo.name}">...</td>
-					        <td th:text="${topo.place}">...</td>
-					        <td th:text="${topo.description}">...</td>
-					        <td th:text="${topo.date}">...</td>
-					        <td><a class="btn btn-outline-secondary" th:href="@{/toposInfo(idTopos = ${topo.id})}">Détail</a></td>
-					    </tr>
-				    </tbody>
-				</table>
-	  		</div>	
+	<div class="container" align="center">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<h2 class="card-title"><b>Les Topos :</b></h2>
+					<br/>
+					<div class="card-body">
+						<table class="table table-dark table-responsive">
+							<thead>
+								<tr>
+									<th scope="col">Nom</th>
+									<th scope="col">Lieu</th>
+									<th scope="col">Description</th>
+									<th scope="col">Date</th>
+									<th scope="col">Utilisateur</th>
+									<th scope="col">Officiel</th>
+									<th scope="col">Détail</th>
+									<th scope="col">Réservé</th>
+									
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="topo : ${topos}">
+							        <td th:text="${topo.name}">...</td>
+							        <td th:text="${topo.place}">...</td>
+							        <td th:text="${topo.description}">...</td>
+							        <td th:text="${topo.date}">...</td>
+							        <td th:text="${topo.user.username}">...</td>
+							        <td>
+								        <div th:switch="${topo.official}">
+											<div th:case="true"><img alt="true" src="/image/true.png"></div>
+											<div th:case="false"><img alt="false" src="/image/false.png"></div>
+										</div>
+									</td>
+							        <td><a class="btn btn-outline-secondary" th:href="@{/toposInfo(idTopos = ${topo.id})}">Détail</a></td>
+							        <td>
+								        <div th:switch="${topo.reserved}">
+											<div th:case="true"><img alt="true" src="/image/true.png"></div>
+											<div th:case="false"><img alt="false" src="/image/false.png"></div>
+										</div>
+									</td>
+							        <td th:if="${topo.request} == false and ${topo.reserved} == false">							       
+						        		<a th:href="@{/toposReserved(username = ${username}, toposname = ${toposname}, toposreserved = ${topo.reserved}, idTopos = ${topo.id})}" class="btn btn-outline-secondary">Réserver</a>							        	
+									</td>
+							    </tr>
+						    </tbody>
+						</table>
+			  		</div>	
+				</div>
+			</div>
 		</div>
+	</div>
+	<div th:insert="fragments/script.html"></div>
 	<div th:insert="fragments/footer.html"></div>
 </body>
 </html>

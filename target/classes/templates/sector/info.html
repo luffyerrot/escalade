@@ -6,36 +6,43 @@
 </head>
 <body>
 	<header th:insert="fragments/header.html"></header>
-	<div align="center">
-		<h1><b>Mes secteurs :</b></h1>
-		<br/>
-		<div class="container card">
-			<table class="table table-dark">
-				<thead>
-					<tr>
-						<th scope="col">Nom</th>
-						<th scope="col">Taille</th>
-						<th scope="col">Type</th>
-						<th scope="col">Topos</th>
-						<th scope="col">Modifier</th>
-					</tr>
-				</thead>
-				<tbody>
-				    <tr th:each="sector : ${sectors}">
-				        <td th:text="${sector.name}">...</td>
-				        <td th:text="${sector.global_length}">...</td>
-				        <td th:text="${sector.type}">...</td>
-				        <td th:text="${sector.topos != null} ? ${sector.topos.name} : 'aucun topos'">...</td>
-					    <td><a class="btn btn-outline-secondary" th:href="@{/sector/update(idSector = ${sector.id})}">Modifier</a></td>
-				    </tr>
-			    </tbody>
-			</table>
-			<br/>
-			<p align="center" sec:authorize="isAuthenticated()">
-				<a th:href="@{/sector/create}" class="btn btn-outline-secondary">Créer un secteur</a>
-			</p>
-  		</div>	
+	<div class="container" align="center">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<h2 class="card-title"><b>Mes secteurs :</b></h2>
+					<br/>
+					<div class="card-body">
+						<table class="table table-dark table-responsive">
+							<thead>
+								<tr>
+									<th scope="col">Nom</th>
+									<th scope="col">Taille</th>
+									<th scope="col">Type</th>
+									<th scope="col">Topos</th>
+									<th scope="col">Modifier</th>
+								</tr>
+							</thead>
+							<tbody>
+							    <tr th:each="sector : ${sectors}">
+							        <td th:text="${sector.name}">...</td>
+							        <td th:text="${sector.global_length}">...</td>
+							        <td th:text="${sector.type}">...</td>
+							        <td th:text="${sector.topos != null} ? ${sector.topos.name} : 'aucun topos'">...</td>
+								    <td><a class="btn btn-outline-secondary" th:href="@{/sector/update(idSector = ${sector.id})}">Modifier</a></td>
+							    </tr>
+						    </tbody>
+						</table>
+						<br/>
+						<p align="center" sec:authorize="isAuthenticated()">
+							<a th:href="@{/sector/create}" class="btn btn-outline-secondary">Créer un secteur</a>
+						</p>
+			  		</div>	
+		  		</div>
+	  		</div>
+  		</div>
 	</div>
+	<div th:insert="fragments/script.html"></div>
 	<div th:insert="fragments/footer.html"></div>
 </body>
 </html>

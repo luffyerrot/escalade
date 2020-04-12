@@ -6,20 +6,27 @@
 </head>
 <body>
 	<header th:insert="fragments/header.html"></header>
-	<div align="center">
-		<h1><b>Modification de commentaire :</b></h1>
-		<br/>
-		<div class="container card" th:each="comment : ${comments}" th:objet="comments">
-			<form th:action="@{/toposInfo(idTopos = ${comment.topos.id})}" method="post" id="formModif">
-				<input type="hidden" th:name="id" th:value="${comment.id}" class="form-control"/>
-				<input type="hidden" th:name="release_date" th:value="${comment.release_date}" class="form-control"/>
-				<label>Commentaire à modifier : </label>
-				<textarea th:text="${comment.comment}" th:name="comment"></textarea>
-				<input type="submit" value="Modifier" class="btn btn-outline-secondary" id="link"/>
-			</form>
-		<br/>
-  		</div>	
-  	</div>
+	<div class="container" align="center">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<h2 class="card-title"><b>Modification de commentaire :</b></h2>
+					<br/>
+					<div class="card-body" th:each="comment : ${comments}">
+						<form th:action="@{/modifComment(idTopos = ${comment.topos.id})}" th:objet="commentObj" method="post" id="formModif">
+							<input type="hidden" th:name="id" th:value="${comment.id}" class="form-control"/>
+							<input type="hidden" th:name="release_date" th:value="${comment.release_date}" class="form-control"/>
+							<label>Commentaire à modifier : </label>
+							<textarea th:text="${comment.comment}" th:name="comment"></textarea>
+							<input type="submit" value="Modifier" class="btn btn-outline-secondary" id="link"/>
+						</form>
+						<br/>
+					</div>	
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:insert="fragments/script.html"></div>
 	<div th:insert="fragments/footer.html"></div>
 </body>
 </html>
