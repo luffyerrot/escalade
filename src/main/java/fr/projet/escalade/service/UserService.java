@@ -18,33 +18,36 @@ import fr.projet.escalade.repositories.UserRepository;
 import fr.projet.escalade.security.CustomUserDetailsService;
 
 @Service
-public class UserService extends CustomUserDetailsService{
+public class UserService extends CustomUserDetailsService {
 
 	@Autowired
 	UserRepository userRepository;
 
 	@Autowired
 	RoleService roleService;
-	
+
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
-	Logger logger = LoggerFactory.getLogger(ToposService.class);
-	
+	Logger logger = LoggerFactory.getLogger(UserService.class);
+
 	public User getById(Long id) {
 		this.logger.debug("getById Call = " + id);
-		User user = userRepository.findById(id).get();
-		this.logger.debug("getById Return = " + user);
-		return user;
+		if(id != 0) {
+			User user = userRepository.findById(id).get();
+			this.logger.debug("getById Return = " + user);
+			return user;
+		}
+		return null;
 	}
-	
+
 	public User save(User user) {
 		this.logger.debug("save Call = " + user);
 		User userreturn = userRepository.save(user);
 		this.logger.debug("save Return = " + userreturn);
 		return userreturn;
 	}
-	
+
 	public List<User> findAll() {
 		List<User> user = userRepository.findAll();
 		this.logger.debug("findAll Return = " + user);
@@ -56,37 +59,28 @@ public class UserService extends CustomUserDetailsService{
 		try {
 			Long namereturn = userRepository.findByEmail(name).get().getId();
 			this.logger.debug("getIdByName Return = " + namereturn);
-			return namereturn; 
+			return namereturn;
 		} catch (NoSuchElementException e) {
 			Long noId = Integer.toUnsignedLong(0);
 			this.logger.debug("getIdByName Try Catch Return = " + noId);
 			return noId;
 		}
 	}
-	
-	public Authentication auth() {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		this.logger.debug("auth Return = " + auth);
-		return auth;
-	}
-	
-	public Long authUserId() {
-		Long id = getIdByName(auth().getName());
-		this.logger.debug("authUserId Return = " + id);
-		return id;
-	}
-	
+
 	public User authUser() {
-		User user = getById(authUserId());
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String name = auth.getName();
+		Long id = this.getIdByName(name);
+		User user = this.getById(id);
 		this.logger.debug("authUser Return = " + user);
 		return user;
 	}
-	
+
 	public void updateUser(Long idUser, String username, String email) {
 		this.logger.debug("updateUser Call = " + idUser + " " + username + " " + email);
 		userRepository.updateUser(idUser, username, email);
 	}
-	
+
 	public void create(User user) {
 		this.logger.debug("create Call = " + user);
 		user.setPassword(this.passwordEncoder.encode(user.getPassword()));

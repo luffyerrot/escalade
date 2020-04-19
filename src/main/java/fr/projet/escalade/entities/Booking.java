@@ -25,7 +25,8 @@ public class Booking implements Serializable{
 	@JoinColumn(name = "user_id")
     private User user;
 	
-	@OneToOne()
+	@ManyToOne()
+	@JoinColumn(name = "topos_id")
     private Topos topos;
 	
 	//---------------------------------------------------------------------------------

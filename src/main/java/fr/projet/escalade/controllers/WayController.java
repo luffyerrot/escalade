@@ -27,41 +27,45 @@ public class WayController {
 
 	@RequestMapping(value = "/info", method = RequestMethod.GET)
 	public ModelAndView infoGet(ModelMap model) {
-		if(wayService.getByUserId(userService.authUserId()) != null) {
-			model.addAttribute("ways", wayService.getByUserId(userService.authUserId()));
+		if(wayService.getByUserId(userService.authUser().getId()) != null) {
+			model.addAttribute("ways", wayService.getByUserId(userService.authUser().getId()));
 		}
 	    return new ModelAndView("way/info", model);
 	}
 	
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView createGet(ModelMap model) {
-		model.addAttribute("users", userService.getById(userService.authUserId()));
-		model.addAttribute("sectors", sectorService.getByUserId(userService.authUserId()));
+		model.addAttribute("users", userService.getById(userService.authUser().getId()));
+		model.addAttribute("sectors", sectorService.getByUserId(userService.authUser().getId()));
 	    return new ModelAndView("way/create", model);
 	}
 	
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public ModelAndView createPost(@ModelAttribute("way") Way way, ModelMap model) {
 		wayService.create(way, userService.authUser());
-		if(wayService.getByUserId(userService.authUserId()) != null) {
-			model.addAttribute("ways", wayService.getByUserId(userService.authUserId()));
+		if(wayService.getByUserId(userService.authUser().getId()) != null) {
+			model.addAttribute("ways", wayService.getByUserId(userService.authUser().getId()));
 		}
 	    return new ModelAndView("way/info", model);
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	public ModelAndView updateGet(ModelMap model, @RequestParam(name="idWay", required = true) Long idWay) {
-		model.addAttribute("ways", wayService.getById(idWay));
-		model.addAttribute("users", userService.getById(userService.authUserId()));
-		model.addAttribute("sectors", sectorService.getByUserId(userService.authUserId()));
-	    return new ModelAndView("way/update", model);
+		if(wayService.asAcces(idWay)) {
+			model.addAttribute("ways", wayService.getById(idWay));
+			model.addAttribute("users", userService.getById(userService.authUser().getId()));
+			model.addAttribute("sectors", sectorService.getByUserId(userService.authUser().getId()));
+		    return new ModelAndView("way/update", model);
+		} else {
+			return new ModelAndView("redirect:/", model);
+		}
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public ModelAndView updatePost(@ModelAttribute("way") Way way, ModelMap model) {
 		wayService.updateWay(way.getId(), way.getLength(), way.getDifficulty(), way.getDescription(), way.getSector());
-		if(wayService.getByUserId(userService.authUserId()) != null) {
-			model.addAttribute("ways", wayService.getByUserId(userService.authUserId()));
+		if(wayService.getByUserId(userService.authUser().getId()) != null) {
+			model.addAttribute("ways", wayService.getByUserId(userService.authUser().getId()));
 		}
 	    return new ModelAndView("way/info", model);
 	}

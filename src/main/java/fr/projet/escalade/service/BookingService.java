@@ -26,7 +26,7 @@ public class BookingService extends CustomUserDetailsService{
 	@Autowired
 	ToposService toposService;
 	
-	Logger logger = LoggerFactory.getLogger(ToposService.class);
+	Logger logger = LoggerFactory.getLogger(BookingService.class);
 	
 	public Booking getById(Long id) {
 		this.logger.debug("getById Call = " + id);
@@ -77,7 +77,7 @@ public class BookingService extends CustomUserDetailsService{
 			this.logger.debug("create New Date = " + date);
 			Booking booking = new Booking();
 			this.logger.debug("create Booking = " + booking);
-			booking.setTopos(toposService.getById(idTopos));
+			booking.setTopos(topos);
 			booking.setUser(userService.authUser());
 			booking.setBooking_date(date);
 			booking.setAccepted(null);

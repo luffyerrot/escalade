@@ -20,6 +20,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 									<th scope="col">Utilisateur</th>
 									<th scope="col">Nom du topos</th>
 									<th scope="col">Réservation accepter</th>
+									<th scope="col">Date de réservation</th>
 								</tr>
 								<tr th:each="booking : ${bookings}">
 							        <td th:text="${booking?.user?.username}">...</td>
@@ -30,6 +31,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 											<div th:case="false"><img alt="false" src="/image/false.png"></div>
 										</div>
 									</td>
+							        <td th:text="${booking?.booking_date}">...</td>
 							    </tr>
 							</table>
 						</div>

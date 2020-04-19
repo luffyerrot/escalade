@@ -55,8 +55,15 @@ public class User implements Serializable {
     
     //----------------------------------------------------------------------------------
 	
+	
+	
 	public Long getId() {
 		return id;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", email=" + email + ", username=" + username + "]";
 	}
 
 	public void setId(Long id) {

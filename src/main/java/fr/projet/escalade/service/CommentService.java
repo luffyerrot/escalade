@@ -25,7 +25,7 @@ public class CommentService extends CustomUserDetailsService{
 	@Autowired
 	UserService userService;
 	
-	Logger logger = LoggerFactory.getLogger(ToposService.class);
+	Logger logger = LoggerFactory.getLogger(CommentService.class);
 	
 	public Comment getById(Long id) {
 		this.logger.debug("getById Call = " + id);

@@ -17,9 +17,12 @@ import fr.projet.escalade.security.CustomUserDetailsService;
 public class WayService extends CustomUserDetailsService{
 
 	@Autowired
+	private UserService userService;
+	
+	@Autowired
 	private WayRepository wayRepository;
 
-	Logger logger = LoggerFactory.getLogger(ToposService.class);
+	Logger logger = LoggerFactory.getLogger(WayService.class);
 	
 	public Way getById(Long id) {
 		this.logger.debug("getById Call = " + id);
@@ -58,5 +61,13 @@ public class WayService extends CustomUserDetailsService{
 	public void updateWay(Long idWay, Integer length, Integer difficulty, String description, Sector sector) {
 		this.logger.debug("updateWay Call = " + idWay + " " + length + " " + difficulty + " " + description + " " + sector);
 		wayRepository.updateWay(idWay, length, difficulty, description, sector);
+	}
+	
+	public Boolean asAcces(Long idWay) {
+		if (getByUserId(userService.authUser().getId()).contains(getById(idWay))) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

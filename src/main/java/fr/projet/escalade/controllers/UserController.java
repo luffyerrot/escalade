@@ -33,9 +33,9 @@ public class UserController {
 	
 	@RequestMapping(value = "/detail", method = RequestMethod.GET)
 	public ModelAndView detailGet(ModelMap model) {
-	    String name = userService.auth().getName();
+	    String name = userService.authUser().getEmail();
 	    if(userService.authUser().getEmail().equals(name)) {
-	    	model.addAttribute("users", userService.getById(userService.authUserId()));
+	    	model.addAttribute("users", userService.getById(userService.authUser().getId()));
 	    	return new ModelAndView("user/detail", model);
 	    } else {
 	    	model.addAttribute("users", userService.findAll());
@@ -51,23 +51,27 @@ public class UserController {
 	
 	@RequestMapping(value = "/toposAccepted", method = RequestMethod.GET)
 	public ModelAndView requestAcceptedGet(ModelMap model, @RequestParam(name="idTopos", required = true) Long idTopos, @RequestParam(name="idBooking", required = true) Long idBooking) {
-		bookingService.changeAccepted(idBooking, true);
-		toposService.changeRequest(idTopos);
-		toposService.changeReserved(idTopos);
-		model.addAttribute("bookings", bookingService.getByUserIdAndAcceptedNull(userService.authUser()));
+		if(toposService.asAcces(idTopos)) {
+			bookingService.changeAccepted(idBooking, true);
+			toposService.changeRequest(idTopos);
+			toposService.changeReserved(idTopos);
+			model.addAttribute("bookings", bookingService.getByUserIdAndAcceptedNull(userService.authUser()));
+		}
 	    return new ModelAndView("user/toposRequest", model);
 	}
 	
 	@RequestMapping(value = "/toposRefused", method = RequestMethod.GET)
 	public ModelAndView requestRefusedGet(ModelMap model, @RequestParam(name="idTopos", required = true) Long idTopos, @RequestParam(name="idBooking", required = true) Long idBooking) {
-		bookingService.deleteById(idBooking);
-		toposService.changeRequest(idTopos);
+		if(toposService.asAcces(idTopos)) {
+			bookingService.changeAccepted(idBooking, false);
+			toposService.changeRequest(idTopos);
+		}
 	    return new ModelAndView("user/toposRequest", model);
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	public ModelAndView updateGet(ModelMap model) {
-		model.addAttribute("users", userService.getById(userService.authUserId()));
+		model.addAttribute("users", userService.getById(userService.authUser().getId()));
 	    return new ModelAndView("user/update", model);
 	}
 	

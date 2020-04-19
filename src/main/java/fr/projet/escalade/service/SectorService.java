@@ -15,6 +15,9 @@ import fr.projet.escalade.security.CustomUserDetailsService;
 public class SectorService extends CustomUserDetailsService{
 
 	@Autowired
+	private UserService userService;
+	
+	@Autowired
 	private SectorRepository sectorRepository;
 	
 	public Sector getById(Long id) {
@@ -40,5 +43,13 @@ public class SectorService extends CustomUserDetailsService{
 	
 	public void updateSector(Long idSector, String name, Integer global_length, String type, Topos topos) {
 		sectorRepository.updateSector(idSector, name, global_length, type, topos);
+	}
+	
+	public Boolean asAcces(Long idSector) {
+		if (getByUserId(userService.authUser().getId()).contains(getById(idSector))) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

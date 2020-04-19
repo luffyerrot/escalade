@@ -115,7 +115,7 @@ public class ToposService extends CustomUserDetailsService{
 	}
 	
 	public Boolean asAcces(Long idTopos) {
-		if (getByUserId(userService.authUserId()).contains(getById(idTopos))) {
+		if (getByUserId(userService.authUser().getId()).contains(getById(idTopos))) {
 			return true;
 		} else {
 			return false;
@@ -123,7 +123,7 @@ public class ToposService extends CustomUserDetailsService{
 	}
 	
 	public Boolean toposNull() {
-		if (getByUserId(userService.authUserId()) != null) {
+		if (getByUserId(userService.authUser().getId()) != null) {
 			return true;
 		} else {
 			return false;

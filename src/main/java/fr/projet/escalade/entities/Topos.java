@@ -47,8 +47,8 @@ public class Topos implements Serializable{
 	@OneToMany(mappedBy="topos")
 	private List<Sector> sectors;
 	
-	@OneToOne(mappedBy = "topos")
-    private Booking booking;
+	@OneToMany(mappedBy = "topos")
+    private List <Booking> bookings;
 	
 	@OneToMany(mappedBy = "topos") 
     private List <Comment> comments;
@@ -58,7 +58,7 @@ public class Topos implements Serializable{
 	@Override
 	public String toString() {
 		return "Topos [id=" + id + ", name=" + name + ", place=" + place + ", reserved=" + reserved + ", description="
-				+ description + ", date=" + date + ", user=" + user + ", sectors=" + sectors + ", booking=" + booking
+				+ description + ", date=" + date + ", user=" + user + ", sectors=" + sectors + ", bookings=" + bookings
 				+ "]";
 	}
 	
@@ -110,12 +110,12 @@ public class Topos implements Serializable{
 		this.user = user;
 	}
 
-	public Booking getBooking() {
-		return booking;
+	public List<Booking> getBookings() {
+		return bookings;
 	}
 
-	public void setBooking(Booking booking) {
-		this.booking = booking;
+	public void setBookings(List<Booking> bookings) {
+		this.bookings = bookings;
 	}
 
 	public List<Sector> getSectors() {

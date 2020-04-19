@@ -15,7 +15,7 @@ public class RoleService extends CustomUserDetailsService{
 	@Autowired
 	RoleRepository roleRepository;
 
-	Logger logger = LoggerFactory.getLogger(ToposService.class);
+	Logger logger = LoggerFactory.getLogger(RoleService.class);
 	
 	public Role findByName(String name) {
 		this.logger.debug("findByName Call = " + name);

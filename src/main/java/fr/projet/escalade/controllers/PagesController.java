@@ -44,10 +44,6 @@ public class PagesController{
 	
 	@GetMapping("/")
 	public ModelAndView home(ModelMap model) {
-		if(userService.auth().isAuthenticated()) {
-			model.addAttribute("id", userService.authUserId());
-		}
-		model.addAttribute("users", userService.findAll());
 		model.addAttribute("bookings", bookingService.getByToposUserIdAndAccepted(userService.authUser()));
 	    return new ModelAndView("home", model);
 	}
@@ -80,7 +76,7 @@ public class PagesController{
 	public ModelAndView toposReserved(ModelMap model, @RequestParam(name="username", required = false) String username, @RequestParam(name="toposname", required = false) String toposname, 
 			@RequestParam(name="toposreserved", required = false) Boolean toposreserved, @RequestParam(name="idTopos", required = false) Long idTopos) {
 		toposService.changeRequest(idTopos);
-		if (!((toposreserved == null) && (idTopos == null)) && (bookingService.getByToposId(idTopos) == null)) {
+		if (!((toposreserved == null) && (idTopos == null))) {
 			bookingService.sendBookingRequest(idTopos);
 		}
 		if((username != null && toposname != null) && (!username.isEmpty() || !toposname.isEmpty())) {

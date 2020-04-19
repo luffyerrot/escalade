@@ -24,23 +24,23 @@ public class ToposController {
 	
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView createGet(ModelMap model) {
-		model.addAttribute("users", userService.getById(userService.authUserId()));
+		model.addAttribute("users", userService.getById(userService.authUser().getId()));
 	    return new ModelAndView("topos/create", model);
 	}
 	
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public ModelAndView createPost(@ModelAttribute("topos") Topos topos, ModelMap model) {
 		toposService.create(topos, userService.authUser());
-		if (!toposService.getByUserId(userService.authUserId()).isEmpty()) {
-			model.addAttribute("topos", toposService.getByUserId(userService.authUserId()));
+		if (!toposService.getByUserId(userService.authUser().getId()).isEmpty()) {
+			model.addAttribute("topos", toposService.getByUserId(userService.authUser().getId()));
 		}
 	    return new ModelAndView("redirect:/topos/info", model);
 	}
 	
 	@RequestMapping(value = "/info", method = RequestMethod.GET)
 	public ModelAndView infoGet(ModelMap model) {
-		if (!toposService.getByUserId(userService.authUserId()).isEmpty()) {
-			model.addAttribute("topos", toposService.getByUserId(userService.authUserId()));
+		if (!toposService.getByUserId(userService.authUser().getId()).isEmpty()) {
+			model.addAttribute("topos", toposService.getByUserId(userService.authUser().getId()));
 		}
 	    return new ModelAndView("topos/info", model);
 	}
@@ -51,8 +51,8 @@ public class ToposController {
 			if (official != null) {
 				toposService.changeOfficial(idTopos);
 			}
-			if (toposService.getByUserId(userService.authUserId()) == null) {
-				model.addAttribute("topos", toposService.getByUserId(userService.authUserId()));
+			if (toposService.getByUserId(userService.authUser().getId()) == null) {
+				model.addAttribute("topos", toposService.getByUserId(userService.authUser().getId()));
 			}
 		    return new ModelAndView("redirect:/topos/info", model);
 		} else {
@@ -67,7 +67,7 @@ public class ToposController {
 				toposService.changePublished(idTopos);
 			}
 			if (toposService.toposNull()) {
-				model.addAttribute("topos", toposService.getByUserId(userService.authUserId()));
+				model.addAttribute("topos", toposService.getByUserId(userService.authUser().getId()));
 			}
 		    return new ModelAndView("redirect:/topos/info", model);
 		} else {
@@ -79,7 +79,7 @@ public class ToposController {
 	public ModelAndView updateGet(ModelMap model, @RequestParam(name="idTopos", required = true) Long idTopos) {
 		if(toposService.asAcces(idTopos)) {
 			model.addAttribute("topos", toposService.getById(idTopos));
-			model.addAttribute("users", userService.getById(userService.authUserId()));
+			model.addAttribute("users", userService.getById(userService.authUser().getId()));
 		    return new ModelAndView("topos/update", model);
 		} else {
 			return new ModelAndView("redirect:/", model);
@@ -90,7 +90,7 @@ public class ToposController {
 	public ModelAndView updatePost(@ModelAttribute("topos") Topos topos, ModelMap model) {
 		toposService.update(topos.getId(), topos.getName(), topos.getDescription(), topos.getPlace());
 		if (toposService.toposNull()) {
-			model.addAttribute("topos", toposService.getByUserId(userService.authUserId()));
+			model.addAttribute("topos", toposService.getByUserId(userService.authUser().getId()));
 		}
 	    return new ModelAndView("topos/info", model);
 	}
