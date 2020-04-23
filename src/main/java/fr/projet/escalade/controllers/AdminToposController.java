@@ -16,15 +16,29 @@ public class AdminToposController {
 
 	@Autowired
 	ToposService toposService;
-	
+
+	/*
+	 * affiche la page d'information des topos pour l'officialisation.
+	 */
 	@RequestMapping(value = "/info", method = RequestMethod.GET)
-	public ModelAndView infoGet(@RequestParam(name="idTopos", required = false) Long idTopos, ModelMap model) {
-			if(idTopos != null) {
-				toposService.changeOfficial(idTopos);
-			}
-			if (toposService.getAll() != null) {
-				model.addAttribute("topos", toposService.getAll());
-			}
+	public ModelAndView infoGet(ModelMap model) {
+		if (toposService.getAll() != null) {
+			model.addAttribute("topos", toposService.getAll());
+		}
 	    return new ModelAndView("admin/topos/info", model);
+	}
+	
+	/*
+	 * permet d'officialiser des topos.
+	 */
+	@RequestMapping(value = "/toposOfficial", method = RequestMethod.GET)
+	public ModelAndView requestAcceptedGet(ModelMap model, @RequestParam(name="idTopos", required = false) Long idTopos) {
+		if(idTopos != null) {
+			toposService.changeOfficial(idTopos);
+		}
+		if (toposService.getAll() != null) {
+			model.addAttribute("topos", toposService.getAll());
+		}
+	    return new ModelAndView("redirect:/admin/topos/info", model);
 	}
 }

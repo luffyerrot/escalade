@@ -28,37 +28,37 @@ public class CommentService extends CustomUserDetailsService{
 	Logger logger = LoggerFactory.getLogger(CommentService.class);
 	
 	public Comment getById(Long id) {
-		this.logger.debug("getById Call = " + id);
+		this.logger.info("getById Call = " + id);
 		Comment comment = commentRepository.findById(id).get();
-		this.logger.debug("getById Return = " + comment);
+		this.logger.info("getById Return = " + comment);
 		return comment;
 	}
 	
 	public List<Comment> getByToposId(Long id) {
-		this.logger.debug("getByToposId Call = " + id);
+		this.logger.info("getByToposId Call = " + id);
 		List<Comment> comment = commentRepository.findByToposId(id);
-		this.logger.debug("getByToposId Return = " + comment);
+		this.logger.info("getByToposId Return = " + comment);
 		return comment;
 	}
 	
 	public Comment save(Comment comment) {
-		this.logger.debug("save Call = " + comment);
+		this.logger.info("save Call = " + comment);
 		Comment commentreturn = commentRepository.save(comment);
-		this.logger.debug("save Return = " + commentreturn);
+		this.logger.info("save Return = " + commentreturn);
 		return commentreturn;
 	}
 	
 	public void deleteById(Long id) {
-		this.logger.debug("deleteById Call = " + id);
+		this.logger.info("deleteById Call = " + id);
 		commentRepository.deleteById(id);
 	}
 	
 	public void create(Comment comment, Long idTopos) {
-		this.logger.debug("create Call = " + comment + " " + idTopos);
+		this.logger.info("create Call = " + comment + " " + idTopos);
 		Date date = new Date();
-		this.logger.debug("create New Date = " + date);
+		this.logger.info("create New Date = " + date);
 		Topos topos = toposService.getById(idTopos);
-		this.logger.debug("create Topos = " + topos);
+		this.logger.info("create Topos = " + topos);
 		comment.setTopos(topos);
 		comment.setUser(userService.authUser());
 		comment.setRelease_date(date);
@@ -66,7 +66,7 @@ public class CommentService extends CustomUserDetailsService{
 	}
 	
 	public void update(Long idComment, String comment) {
-		this.logger.debug("update Call = " + idComment + " " + comment);
+		this.logger.info("update Call = " + idComment + " " + comment);
 		commentRepository.update(idComment, comment);
 	}
 }

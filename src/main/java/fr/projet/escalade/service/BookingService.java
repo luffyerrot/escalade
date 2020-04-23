@@ -1,5 +1,6 @@
 package fr.projet.escalade.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,54 +30,75 @@ public class BookingService extends CustomUserDetailsService{
 	Logger logger = LoggerFactory.getLogger(BookingService.class);
 	
 	public Booking getById(Long id) {
-		this.logger.debug("getById Call = " + id);
+		this.logger.info("getById Call = " + id);
 		Booking booking =  bookingRepository.findById(id).get();
-		this.logger.debug("getById Return = " + booking);
+		this.logger.info("getById Return = " + booking);
 		return booking;
+	}
+	
+	public List<Booking> getByUserId(Long id) {
+		this.logger.info("getByUserId Call = " + id);
+		List<Booking> bookings = bookingRepository.findByUserId(id);
+		this.logger.info("getByUserId Return = " + bookings);
+		return bookings;
 	}
 	
 	public Booking save(Booking booking) {
-		this.logger.debug("save Call = " + booking);
+		this.logger.info("save Call = " + booking);
 		Booking bookingreturn = bookingRepository.save(booking);
-		this.logger.debug("save Return = " + bookingreturn);
+		this.logger.info("save Return = " + bookingreturn);
 		return bookingreturn;
 	}
 	
-	public Booking getByToposId(Long idTopos) {
-		this.logger.debug("getByToposId Call = " + idTopos);
-		Booking booking = bookingRepository.findByToposId(idTopos);
-		this.logger.debug("getByToposId Return = " + booking);
-		return booking;
+	public List<Booking> getByToposId(Long idTopos) {
+		this.logger.info("getByToposId Call = " + idTopos);
+		List<Booking> bookings = bookingRepository.findByToposId(idTopos);
+		this.logger.info("getByToposId Return = " + bookings);
+		return bookings;
 	}
 	
-	public List<Booking> getByUserIdAndAcceptedNull(User user) {
-		this.logger.debug("getByUserIdAndAcceptedNull Call = " + user);
-		List<Booking> bookings = bookingRepository.findByUserIdAndAcceptedNull(user);
-		this.logger.debug("getByUserIdAndAcceptedNull Return = " + bookings);
+	public List<Booking> getByUserAndAcceptedNull(User user) {
+		this.logger.info("getByUserAndAcceptedNull Call = " + user);
+		List<Booking> bookings = bookingRepository.findByToposUserAndAcceptedNull(user);
+		this.logger.info("getByUserAndAcceptedNull Return = " + bookings);
 		return bookings;
 	}
 	
 	public void changeAccepted(Long idBooking, Boolean accepted) {
-		this.logger.debug("changeAccepted Call = " + idBooking + " " + accepted);
+		this.logger.info("changeAccepted Call = " + idBooking + " " + accepted);
 		bookingRepository.changeAccepted(idBooking, accepted);
 	}
 	
-	public List<Booking> getByToposUserIdAndAccepted(User user) {
-		this.logger.debug("getByToposUserIdAndAccepted Call = " + user);
-		List<Booking> bookings = bookingRepository.findByToposUserIdAndAcceptedFalseOrTrue(user);
-		this.logger.debug("getByToposUserIdAndAccepted Return = " + bookings);
+	public List<Booking> getByUserAndAccepted(User user) {
+		this.logger.info("getByToposUserIdAndAccepted Call = " + user);
+		List<Booking> bookings = bookingRepository.findByUserAndAcceptedFalseOrTrue(user);
+		this.logger.info("getByToposUserIdAndAccepted Return = " + bookings);
+		return bookings;
+	}
+	
+	public List<Booking> getByToposAndAccepted(List<Topos> topos) {
+		this.logger.info("getByToposAndAccepted Call = " + topos);
+		List<Booking> bookings = new ArrayList<>();
+		for (int i = 0; i < topos.size(); i++) {
+			Topos toposUnique = topos.get(i);
+			this.logger.info("getByToposAndAccepted For = " + toposUnique);
+			for (int j = 0; j < bookingRepository.findByToposAndAccepted(toposUnique).size(); j++) {
+				bookings.add(bookingRepository.findByToposAndAccepted(toposUnique).get(j));
+			}
+		}
+		this.logger.info("getByToposAndAccepted Return = " + bookings);
 		return bookings;
 	}
 	
 	public void sendBookingRequest(Long idTopos) {
-		this.logger.debug("sendBookingRequest Call = " + idTopos);
+		this.logger.info("sendBookingRequest Call = " + idTopos);
 		Topos topos = toposService.getById(idTopos);
-		this.logger.debug("sendBookingRequest Topos = " + topos);
+		this.logger.info("sendBookingRequest Topos = " + topos);
 		if (topos.getReserved().equals(false)) {
 			Date date = new Date();
-			this.logger.debug("create New Date = " + date);
+			this.logger.info("create New Date = " + date);
 			Booking booking = new Booking();
-			this.logger.debug("create Booking = " + booking);
+			this.logger.info("create Booking = " + booking);
 			booking.setTopos(topos);
 			booking.setUser(userService.authUser());
 			booking.setBooking_date(date);
@@ -86,7 +108,15 @@ public class BookingService extends CustomUserDetailsService{
 	}
 	
 	public void deleteById(Long idBooking) {
-		this.logger.debug("deleteById Call = " + idBooking);
+		this.logger.info("deleteById Call = " + idBooking);
 		bookingRepository.deleteById(idBooking);
+	}
+	
+	public Boolean asAcces(Long idBooking) {
+		if (getByUserId(userService.authUser().getId()).contains(getById(idBooking))) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

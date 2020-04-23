@@ -9,20 +9,26 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import fr.projet.escalade.entities.Booking;
+import fr.projet.escalade.entities.Topos;
 import fr.projet.escalade.entities.User;
 
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Long>{
 	
-	public Booking findByToposId(Long idTopos);
+	public List<Booking> findByUserId(Long id);
 	
-	@Query("SELECT b FROM Booking b WHERE b.user = :user AND b.accepted = null")
-	public List<Booking> findByUserIdAndAcceptedNull(@Param("user") User user);
+	public List<Booking> findByToposId(Long idTopos);
+	
+	@Query("SELECT b FROM Booking b WHERE b.accepted = null AND b.topos.user = :user")
+	public List<Booking> findByToposUserAndAcceptedNull(@Param("user") User user);
 	
 	@Modifying
 	@Query("UPDATE Booking b SET b.accepted = :accepted WHERE b.id = :id")
 	void changeAccepted(@Param("id")Long idTopos, @Param("accepted")Boolean accepted);
 	
 	@Query("SELECT b FROM Booking b WHERE b.accepted = true OR b.accepted = false AND b.user = :user")
-	public List<Booking> findByToposUserIdAndAcceptedFalseOrTrue(@Param("user") User user);
+	public List<Booking> findByUserAndAcceptedFalseOrTrue(@Param("user") User user);
+	
+	@Query("SELECT b FROM Booking b WHERE b.accepted = true AND b.topos = :topos")
+	public List<Booking> findByToposAndAccepted(@Param("topos") Topos topos);
 }

@@ -41,18 +41,47 @@ public class PagesController{
 	
 	@Autowired
 	PasswordEncoder passwordEncoder;
-	
+
+	/*
+	 * affiche la page principale.
+	 */	
 	@GetMapping("/")
 	public ModelAndView home(ModelMap model) {
-		model.addAttribute("bookings", bookingService.getByToposUserIdAndAccepted(userService.authUser()));
+		model.addAttribute("bookings", bookingService.getByUserAndAccepted(userService.authUser()));
+		model.addAttribute("checkbookings", bookingService.getByToposAndAccepted(userService.authUser().getTopos()));
 	    return new ModelAndView("home", model);
 	}
-	
+
+	/*
+	 * annule la réservation
+	 * affiche la page principale.
+	 * GET
+	 */
+	@RequestMapping(value = "/bookingCancel", method = RequestMethod.GET)
+	public ModelAndView requestRefusedGet(ModelMap model, @RequestParam(name="idBooking", required = false) Long idBooking) {		
+		if(bookingService.asAcces(idBooking) || toposService.asAcces(bookingService.getById(idBooking).getTopos().getId())) {
+			bookingService.changeAccepted(idBooking, false);
+			toposService.changeReserved(bookingService.getById(idBooking).getTopos().getId());
+		}
+		model.addAttribute("bookings", bookingService.getByUserAndAccepted(userService.authUser()));
+		model.addAttribute("checkbookings", bookingService.getByToposAndAccepted(userService.authUser().getTopos()));
+	    return new ModelAndView("redirect:/", model);
+	}
+
+	/*
+	 * affiche la page de création de l'utilisateur.
+	 * GET
+	 */
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create(ModelMap model) {
 	    return new ModelAndView("create", model);
 	}
-	
+
+	/*
+	 * permet de créer un profile utilisateur
+	 * affiche la page de création de l'utilisateur.
+	 * POST
+	 */
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public ModelAndView create(@ModelAttribute("user") User user, ModelMap model) {
 		userService.create(user);
@@ -60,6 +89,10 @@ public class PagesController{
 	    return new ModelAndView("create", model);
 	}
 	
+	/*
+	 * affiche la page des topos publié.
+	 * GET
+	 */
 	@RequestMapping(value = "/toposAll", method = RequestMethod.GET)
 	public ModelAndView infoToposGet(ModelMap model, @RequestParam(name="username", required = false) String username, @RequestParam(name="toposname", required = false) String toposname) {
 		if((username != null && toposname != null) && (!username.isEmpty() || !toposname.isEmpty())) {
@@ -71,7 +104,12 @@ public class PagesController{
 		model.addAttribute("toposname", toposname);
 	    return new ModelAndView("toposAll", model);
 	}
-	
+
+	/*
+	 * permet de réserver un topos
+	 * affiche la page des topos publié.
+	 * GET
+	 */
 	@RequestMapping(value = "/toposReserved", method = RequestMethod.GET)
 	public ModelAndView toposReserved(ModelMap model, @RequestParam(name="username", required = false) String username, @RequestParam(name="toposname", required = false) String toposname, 
 			@RequestParam(name="toposreserved", required = false) Boolean toposreserved, @RequestParam(name="idTopos", required = false) Long idTopos) {
@@ -86,7 +124,11 @@ public class PagesController{
 		}
 	    return new ModelAndView("redirect:/toposAll", model);
 	}
-	
+
+	/*
+	 * affiche la page d'information du topos séléctionné.
+	 * GET
+	 */
 	@RequestMapping(value = "/toposInfo", method = RequestMethod.GET)
 	public ModelAndView detailToposGet(ModelMap model, @RequestParam(name="idTopos", required = true) Long idTopos) {
 		model.addAttribute("comments", commentService.getByToposId(idTopos));
@@ -94,7 +136,12 @@ public class PagesController{
 		model.addAttribute("sectors", sectorService.getByToposId(idTopos));
 	    return new ModelAndView("toposInfo", model);
 	}
-	
+
+	/*
+	 * permet de publier un commentaire
+	 * affiche la page d'information du topos séléctionné.
+	 * POST
+	 */
 	@RequestMapping(value = "/toposInfo", method = RequestMethod.POST)
 	public ModelAndView detailToposPost(@ModelAttribute("comments") Comment comment, ModelMap model, @RequestParam(name="idTopos", required = true) Long idTopos) {
 		commentService.create(comment, idTopos);
@@ -103,14 +150,23 @@ public class PagesController{
 		model.addAttribute("sectors", sectorService.getByToposId(idTopos));
 	    return new ModelAndView("toposInfo", model);
 	}
-	
+
+	/*
+	 * affiche la page d'information du secteur séléctionné.
+	 * GET
+	 */
 	@RequestMapping(value = "/sectorInfo", method = RequestMethod.GET)
 	public ModelAndView detailSectorGet(ModelMap model, @RequestParam(name="idSector", required = true) Long idSector) {
 		model.addAttribute("sectors", sectorService.getById(idSector));
 		model.addAttribute("ways", wayService.getBySectorId(idSector));
 	    return new ModelAndView("sectorInfo", model);
 	}
-	
+
+	/*
+	 * permet de supprimer un commentaire
+	 * affiche la page des topos publié.
+	 * GET
+	 */
 	@RequestMapping(value = "/deleteComment", method = RequestMethod.POST)
 	public ModelAndView deleteComment(ModelMap model, @RequestParam(name="idComment", required = true) Long idComment, @RequestParam(name="idTopos", required = true) Long idTopos) {
 		commentService.deleteById(idComment);
@@ -118,13 +174,22 @@ public class PagesController{
 		model.addAttribute("topos", toposService.getById(idTopos));
 	    return new ModelAndView("redirect:/toposInfo", model);
 	}
-	
+
+	/*
+	 * affiche la page de modification du commentaire séléctionné.
+	 * GET
+	 */
 	@RequestMapping(value = "/modifComment", method = RequestMethod.GET)
 	public ModelAndView modifCommentGet(ModelMap model, @RequestParam(name="idComment", required = true) Long idComment) {
 		model.addAttribute("comments", commentService.getById(idComment));
 	    return new ModelAndView("modifComment", model);
 	}
-	
+
+	/*
+	 * permet de modifier un commentaire
+	 * affiche la page de modification du commentaire séléctionné.
+	 * POST
+	 */
 	@RequestMapping(value = "/modifComment", method = RequestMethod.POST)
 	public ModelAndView modifCommentPost(@ModelAttribute("commentObj") Comment comment, ModelMap model) {
 		commentService.update(comment.getId(), comment.getComment());

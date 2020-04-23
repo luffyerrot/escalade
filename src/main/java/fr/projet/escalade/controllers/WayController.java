@@ -25,6 +25,9 @@ public class WayController {
 	@Autowired
 	WayService wayService;
 
+	/*
+	 * affiche la page d'information des parcours de l'utilisateur connecté.
+	 */
 	@RequestMapping(value = "/info", method = RequestMethod.GET)
 	public ModelAndView infoGet(ModelMap model) {
 		if(wayService.getByUserId(userService.authUser().getId()) != null) {
@@ -33,6 +36,10 @@ public class WayController {
 	    return new ModelAndView("way/info", model);
 	}
 	
+	/*
+	 * affiche la page de création des parcours de l'utilisateur connecté.
+	 * GET
+	 */
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView createGet(ModelMap model) {
 		model.addAttribute("users", userService.getById(userService.authUser().getId()));
@@ -40,6 +47,11 @@ public class WayController {
 	    return new ModelAndView("way/create", model);
 	}
 	
+	/*
+	 * permet de créer un parcour personnalisé
+	 * affiche la page d"information des parcours de l'utilisateur connecté.
+	 * POST
+	 */
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public ModelAndView createPost(@ModelAttribute("way") Way way, ModelMap model) {
 		wayService.create(way, userService.authUser());
@@ -49,6 +61,10 @@ public class WayController {
 	    return new ModelAndView("way/info", model);
 	}
 	
+	/*
+	 * affiche la page de modification des parcours de l'utilisateur connecté.
+	 * GET
+	 */
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	public ModelAndView updateGet(ModelMap model, @RequestParam(name="idWay", required = true) Long idWay) {
 		if(wayService.asAcces(idWay)) {
@@ -61,6 +77,11 @@ public class WayController {
 		}
 	}
 	
+	/*
+	 * permet de modifier un parcour séléctionné
+	 * affiche la page d"information des parcours de l'utilisateur connecté.
+	 * POST
+	 */
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public ModelAndView updatePost(@ModelAttribute("way") Way way, ModelMap model) {
 		wayService.updateWay(way.getId(), way.getLength(), way.getDifficulty(), way.getDescription(), way.getSector());

@@ -31,6 +31,9 @@ public class UserController {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 	
+	/*
+	 * affiche la page d'information de l'utilisateur connecté.
+	 */
 	@RequestMapping(value = "/detail", method = RequestMethod.GET)
 	public ModelAndView detailGet(ModelMap model) {
 	    String name = userService.authUser().getEmail();
@@ -43,23 +46,32 @@ public class UserController {
 	    }
 	}
 
+	/*
+	 * affiche la page des requêtes de réservation.
+	 */
 	@RequestMapping(value = "/toposRequest", method = RequestMethod.GET)
 	public ModelAndView requestToposGet(ModelMap model) {
-		model.addAttribute("bookings", bookingService.getByUserIdAndAcceptedNull(userService.authUser()));
+		model.addAttribute("bookings", bookingService.getByUserAndAcceptedNull(userService.authUser()));
 	    return new ModelAndView("user/toposRequest", model);
 	}
 	
+	/*
+	 * accepte la réservation.
+	 */
 	@RequestMapping(value = "/toposAccepted", method = RequestMethod.GET)
 	public ModelAndView requestAcceptedGet(ModelMap model, @RequestParam(name="idTopos", required = true) Long idTopos, @RequestParam(name="idBooking", required = true) Long idBooking) {
 		if(toposService.asAcces(idTopos)) {
 			bookingService.changeAccepted(idBooking, true);
 			toposService.changeRequest(idTopos);
 			toposService.changeReserved(idTopos);
-			model.addAttribute("bookings", bookingService.getByUserIdAndAcceptedNull(userService.authUser()));
+			model.addAttribute("bookings", bookingService.getByUserAndAcceptedNull(userService.authUser()));
 		}
 	    return new ModelAndView("user/toposRequest", model);
 	}
 	
+	/*
+	 * refuse la réservation.
+	 */
 	@RequestMapping(value = "/toposRefused", method = RequestMethod.GET)
 	public ModelAndView requestRefusedGet(ModelMap model, @RequestParam(name="idTopos", required = true) Long idTopos, @RequestParam(name="idBooking", required = true) Long idBooking) {
 		if(toposService.asAcces(idTopos)) {
@@ -69,12 +81,23 @@ public class UserController {
 	    return new ModelAndView("user/toposRequest", model);
 	}
 	
+
+
+	/*
+	 * affiche la page de modification des données de l'utilisateur connecté.
+	 * GET
+	 */
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	public ModelAndView updateGet(ModelMap model) {
 		model.addAttribute("users", userService.getById(userService.authUser().getId()));
 	    return new ModelAndView("user/update", model);
 	}
 	
+	/*
+	 * permet de modifier les données de l'utilisateur connecté
+	 * affiche la page de modification des données de l'utilisateur connecté.
+	 * POST
+	 */
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public ModelAndView updatePost(@ModelAttribute("user") User user, ModelMap model) {
 		userService.updateUser(user.getId(), user.getUsername(), user.getEmail());

@@ -25,6 +25,9 @@ public class SectorController {
 	@Autowired
 	ToposService toposService;
 	
+	/*
+	 * affiche la page d'information des secteurs de l'utilisateur connecté.
+	 */
 	@RequestMapping(value = "/info", method = RequestMethod.GET)
 	public ModelAndView infoGet(ModelMap model) {
 		if(sectorService.getByUserId(userService.authUser().getId()) != null) {
@@ -33,13 +36,22 @@ public class SectorController {
 	    return new ModelAndView("sector/info", model);
 	}
 	
+	/*
+	 * affiche la page de création des secteurs de l'utilisateur connecté.
+	 * GET
+	 */
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView sectorcreateGet(ModelMap model) {
 		model.addAttribute("users", userService.getById(userService.authUser().getId()));
 		model.addAttribute("topos", toposService.getByUserId(userService.authUser().getId()));
 	    return new ModelAndView("sector/create", model);
 	}
-	
+
+	/*
+	 * permet de créer un secteur personnalisé
+	 * affiche la page d"information des secteurs de l'utilisateur connecté.
+	 * POST
+	 */
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public ModelAndView sectorcreatePost(@ModelAttribute("sector") Sector sector, ModelMap model) {
 		sectorService.create(sector, userService.authUser());
@@ -48,7 +60,11 @@ public class SectorController {
 		}
 	    return new ModelAndView("redirect:/sector/info", model);
 	}
-	
+
+	/*
+	 * affiche la page de modification des secteurs de l'utilisateur connecté.
+	 * GET
+	 */
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	public ModelAndView updateGet(ModelMap model, @RequestParam(name="idSector", required = true) Long idSector) {
 		if(sectorService.asAcces(idSector)) {
@@ -60,7 +76,12 @@ public class SectorController {
 			return new ModelAndView("redirect:/", model);
 		}
 	}
-	
+
+	/*
+	 * permet de modification un secteur personnalisé
+	 * affiche la page d"information des secteurs de l'utilisateur connecté.
+	 * POST
+	 */
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public ModelAndView updatePost(@ModelAttribute("sector") Sector sector, ModelMap model) {
 		sectorService.updateSector(sector.getId(), sector.getName(), sector.getGlobal_length(), sector.getType(), sector.getTopos());

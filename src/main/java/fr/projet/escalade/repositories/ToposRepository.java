@@ -15,6 +15,7 @@ public interface ToposRepository extends JpaRepository<Topos, Long>{
 
 	public List<Topos> findByUserId(Long id);
 	
+	
 	public List<Topos> findAllByPublished(Boolean published);
 	
 	public List<Topos> findByUserUsernameOrNameAndPublished(String username, String toposname, Boolean published);
@@ -39,4 +40,7 @@ public interface ToposRepository extends JpaRepository<Topos, Long>{
 	@Modifying
 	@Query("UPDATE Topos t SET t.name = :name, t.description = :description, t.place = :place WHERE t.id = :id")
 	void updateTopos(@Param("id")Long idTopos, @Param("name")String name, @Param("description")String description, @Param("place")String place);
+	
+	@Query("SELECT t FROM Topos t WHERE t.reserved = true AND t.id = :id")
+	public Topos findByToposIdAndReserved(@Param("id")Long id);
 }

@@ -25,41 +25,41 @@ public class WayService extends CustomUserDetailsService{
 	Logger logger = LoggerFactory.getLogger(WayService.class);
 	
 	public Way getById(Long id) {
-		this.logger.debug("getById Call = " + id);
+		this.logger.info("getById Call = " + id);
 		Way way = wayRepository.findById(id).get();
-		this.logger.debug("getById Return = " + way);
+		this.logger.info("getById Return = " + way);
 		return way;
 	}
 	
 	public List<Way> getByUserId(Long id) {
-		this.logger.debug("getByUserId Call = " + id);
+		this.logger.info("getByUserId Call = " + id);
 		List<Way> way = wayRepository.findByUserId(id);
-		this.logger.debug("getByUserId Return = " + way);
+		this.logger.info("getByUserId Return = " + way);
 		return way;
 	}
 	
 	public List<Way> getBySectorId(Long id) {
-		this.logger.debug("getBySectorId Call = " + id);
+		this.logger.info("getBySectorId Call = " + id);
 		List<Way> way = wayRepository.findBySectorId(id);
-		this.logger.debug("getBySectorId Return = " + way);
+		this.logger.info("getBySectorId Return = " + way);
 		return way;
 	}
 	
 	public Way save(Way way) {
-		this.logger.debug("save Call = " + way);
+		this.logger.info("save Call = " + way);
 		Way wayreturn = wayRepository.save(way);
-		this.logger.debug("save Return = " + wayreturn);
+		this.logger.info("save Return = " + wayreturn);
 		return wayreturn;
 	}
 	
 	public void create(Way way, User user) {
-		this.logger.debug("create Call = " + way + " " + user);
+		this.logger.info("create Call = " + way + " " + user);
 		way.setUser(user);
 		save(way);
 	}
 	
 	public void updateWay(Long idWay, Integer length, Integer difficulty, String description, Sector sector) {
-		this.logger.debug("updateWay Call = " + idWay + " " + length + " " + difficulty + " " + description + " " + sector);
+		this.logger.info("updateWay Call = " + idWay + " " + length + " " + difficulty + " " + description + " " + sector);
 		wayRepository.updateWay(idWay, length, difficulty, description, sector);
 	}
 	

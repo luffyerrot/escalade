@@ -18,9 +18,9 @@ public class RoleService extends CustomUserDetailsService{
 	Logger logger = LoggerFactory.getLogger(RoleService.class);
 	
 	public Role findByName(String name) {
-		this.logger.debug("findByName Call = " + name);
+		this.logger.info("findByName Call = " + name);
 		Role role = roleRepository.findByName(name);
-		this.logger.debug("findByName Return = " + role);
+		this.logger.info("findByName Return = " + role);
 		return role;
 	}
 }

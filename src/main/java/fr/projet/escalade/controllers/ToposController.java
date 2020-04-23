@@ -22,12 +22,21 @@ public class ToposController {
 	@Autowired
 	ToposService toposService;
 	
+	/*
+	 * affiche la page de création des topos de l'utilisateur connecté.
+	 * GET
+	 */
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView createGet(ModelMap model) {
 		model.addAttribute("users", userService.getById(userService.authUser().getId()));
 	    return new ModelAndView("topos/create", model);
 	}
 	
+	/*
+	 * permet de créer un topos personnalisé
+	 * affiche la page de création des topos de l'utilisateur connecté.
+	 * POST
+	 */
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public ModelAndView createPost(@ModelAttribute("topos") Topos topos, ModelMap model) {
 		toposService.create(topos, userService.authUser());
@@ -37,6 +46,9 @@ public class ToposController {
 	    return new ModelAndView("redirect:/topos/info", model);
 	}
 	
+	/*
+	 * affiche la page d'information des topos de l'utilisateur connecté.
+	 */
 	@RequestMapping(value = "/info", method = RequestMethod.GET)
 	public ModelAndView infoGet(ModelMap model) {
 		if (!toposService.getByUserId(userService.authUser().getId()).isEmpty()) {
@@ -45,6 +57,11 @@ public class ToposController {
 	    return new ModelAndView("topos/info", model);
 	}
 	
+	/*
+	 * permet d'officialiser le topos sélectionné
+	 * affiche la page d'information des topos de l'utilisateur connecté.
+	 * GET
+	 */
 	@RequestMapping(value = "/official", method = RequestMethod.GET)
 	public ModelAndView officialGet(ModelMap model, @RequestParam(name="officialvalue", required = false) Boolean official, @RequestParam(name="idTopos", required = false) Long idTopos) {
 		if(toposService.asAcces(idTopos)) {
@@ -60,6 +77,11 @@ public class ToposController {
 		}
 	}
 	
+	/*
+	 * permet de publier le topos sélectionné
+	 * affiche la page d'information des topos de l'utilisateur connecté.
+	 * GET
+	 */
 	@RequestMapping(value = "/published", method = RequestMethod.GET)
 	public ModelAndView publishedGet(ModelMap model, @RequestParam(name="publishedvalue", required = false) Boolean published, @RequestParam(name="idTopos", required = false) Long idTopos) {
 		if(toposService.asAcces(idTopos)) {
@@ -75,6 +97,10 @@ public class ToposController {
 		}
 	}
 	
+	/*
+	 * affiche la page de modification des topos de l'utilisateur connecté.
+	 * GET
+	 */
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	public ModelAndView updateGet(ModelMap model, @RequestParam(name="idTopos", required = true) Long idTopos) {
 		if(toposService.asAcces(idTopos)) {
@@ -85,7 +111,12 @@ public class ToposController {
 			return new ModelAndView("redirect:/", model);
 		}
 	}
-	
+
+	/*
+	 * permet de modifier le topos sélectionné
+	 * affiche la page de modification des topos de l'utilisateur connecté.
+	 * POST
+	 */
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public ModelAndView updatePost(@ModelAttribute("topos") Topos topos, ModelMap model) {
 		toposService.update(topos.getId(), topos.getName(), topos.getDescription(), topos.getPlace());

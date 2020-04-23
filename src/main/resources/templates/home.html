@@ -12,18 +12,19 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 			<div class="col-md-12">
 				<h1><b>Profils</b></h1>
 				<div class="card">
-					<h2 class="card-title">Les réservations</h2>
 					<div class="card-body">
 						<div sec:authorize="isAuthenticated()">
+							<h2 class="card-title">Mes réservations</h2>
 							<table class="table table-dark table-responsive">
 								<tr>
-									<th scope="col">Utilisateur</th>
+									<th scope="col">Propriétaire</th>
 									<th scope="col">Nom du topos</th>
-									<th scope="col">Réservation accepter</th>
+									<th scope="col">Réservé</th>
 									<th scope="col">Date de réservation</th>
+									<th scope="col">Annuler</th>
 								</tr>
 								<tr th:each="booking : ${bookings}">
-							        <td th:text="${booking?.user?.username}">...</td>
+							        <td th:text="${booking?.topos?.user?.username}">...</td>
 							        <td th:text="${booking?.topos?.name}">...</td>
 							        <td>
 								        <div th:switch="${booking?.accepted}">
@@ -31,7 +32,27 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 											<div th:case="false"><img alt="false" src="/image/false.png"></div>
 										</div>
 									</td>
-							        <td th:text="${booking?.booking_date}">...</td>
+							        <td th:text="${#dates.format(booking?.booking_date, 'dd-MM-yyyy hh:mm:ss')}">...</td>
+							        <td th:if="${booking?.accepted} == true">
+										<a th:href="@{/bookingCancel(idBooking = ${booking?.id})}" class="btn btn-outline-secondary">Annuler</a>
+									</td>
+							    </tr>
+							</table>
+							<h2 class="card-title">Les demandes de réservations</h2>
+							<table class="table table-dark table-responsive">
+								<tr>
+									<th scope="col">Utilisateur</th>
+									<th scope="col">Nom du topos</th>
+									<th scope="col">Date de réservation</th>
+									<th scope="col">Annuler</th>
+								</tr>
+								<tr th:each="checkbooking : ${checkbookings}">
+							        <td th:text="${checkbooking?.user?.username}">...</td>
+							        <td th:text="${checkbooking?.topos?.name}">...</td>
+							        <td th:text="${#dates.format(checkbooking?.booking_date, 'dd-MM-yyyy hh:mm:ss')}">...</td>
+							        <td>
+										<a th:href="@{/bookingCancel(idBooking = ${checkbooking?.id})}" class="btn btn-outline-secondary">Annuler</a>
+									</td>
 							    </tr>
 							</table>
 						</div>
