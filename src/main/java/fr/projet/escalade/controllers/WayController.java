@@ -25,7 +25,7 @@ public class WayController {
 	@Autowired
 	WayService wayService;
 
-	/*
+	/**
 	 * affiche la page d'information des parcours de l'utilisateur connecté.
 	 */
 	@RequestMapping(value = "/info", method = RequestMethod.GET)
@@ -36,7 +36,7 @@ public class WayController {
 	    return new ModelAndView("way/info", model);
 	}
 	
-	/*
+	/**
 	 * affiche la page de création des parcours de l'utilisateur connecté.
 	 * GET
 	 */
@@ -47,7 +47,7 @@ public class WayController {
 	    return new ModelAndView("way/create", model);
 	}
 	
-	/*
+	/**
 	 * permet de créer un parcour personnalisé
 	 * affiche la page d"information des parcours de l'utilisateur connecté.
 	 * POST
@@ -61,13 +61,13 @@ public class WayController {
 	    return new ModelAndView("way/info", model);
 	}
 	
-	/*
+	/**
 	 * affiche la page de modification des parcours de l'utilisateur connecté.
 	 * GET
 	 */
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	public ModelAndView updateGet(ModelMap model, @RequestParam(name="idWay", required = true) Long idWay) {
-		if(wayService.asAcces(idWay)) {
+		if(wayService.checkAcces(idWay)) {
 			model.addAttribute("ways", wayService.getById(idWay));
 			model.addAttribute("users", userService.getById(userService.authUser().getId()));
 			model.addAttribute("sectors", sectorService.getByUserId(userService.authUser().getId()));
@@ -77,7 +77,7 @@ public class WayController {
 		}
 	}
 	
-	/*
+	/**
 	 * permet de modifier un parcour séléctionné
 	 * affiche la page d"information des parcours de l'utilisateur connecté.
 	 * POST

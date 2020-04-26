@@ -13,13 +13,6 @@ import fr.projet.escalade.entities.Topos;
 @Repository
 public interface ToposRepository extends JpaRepository<Topos, Long>{
 
-	public List<Topos> findByUserId(Long id);
-	
-	
-	public List<Topos> findAllByPublished(Boolean published);
-	
-	public List<Topos> findByUserUsernameOrNameAndPublished(String username, String toposname, Boolean published);
-	
 	@Modifying
 	@Query("UPDATE Topos t SET t.official = :official WHERE t.id = :id")
 	void changeOfficial(@Param("id")Long idTopos, @Param("official")Boolean official);
@@ -27,7 +20,6 @@ public interface ToposRepository extends JpaRepository<Topos, Long>{
 	@Modifying
 	@Query("UPDATE Topos t SET t.request = :request WHERE t.id = :id")
 	void changeRequest(@Param("id")Long idTopos, @Param("request")Boolean request);
-	
 	
 	@Modifying
 	@Query("UPDATE Topos t SET t.published = :published WHERE t.id = :id")
@@ -43,4 +35,10 @@ public interface ToposRepository extends JpaRepository<Topos, Long>{
 	
 	@Query("SELECT t FROM Topos t WHERE t.reserved = true AND t.id = :id")
 	public Topos findByToposIdAndReserved(@Param("id")Long id);
+	
+	public List<Topos> findByUserId(Long id);
+	
+	public List<Topos> findAllByPublished(Boolean published);
+	
+	public List<Topos> findByUserUsernameOrNameAndPublished(String username, String toposname, Boolean published);
 }

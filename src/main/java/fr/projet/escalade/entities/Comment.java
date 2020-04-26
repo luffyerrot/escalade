@@ -38,7 +38,12 @@ public class Comment implements Serializable{
     private Topos topos;
 
 	//---------------------------------------------------------------------------------
-
+	
+	@Override
+	public String toString() {
+		return "Comment [id=" + id + ", comment=" + comment + ", release_date=" + release_date + "]";
+	}
+	
 	public Long getId() {
 		return id;
 	}

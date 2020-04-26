@@ -13,9 +13,9 @@ import fr.projet.escalade.entities.Comment;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long>{
 
-	public List<Comment> findByToposId(Long id);
-	
 	@Modifying
 	@Query("UPDATE Comment c SET c.comment = :comment WHERE c.id = :id")
 	void update(@Param("id")Long idComment, @Param("comment")String comment);
+	
+	public List<Comment> findByToposId(Long id);
 }

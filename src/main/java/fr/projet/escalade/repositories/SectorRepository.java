@@ -14,11 +14,11 @@ import fr.projet.escalade.entities.Topos;
 @Repository
 public interface SectorRepository extends JpaRepository<Sector, Long>{
 
-	public List<Sector> findByUserId(Long id);
-	
-	public List<Sector> findByToposId(Long id);
-	
 	@Modifying
 	@Query("UPDATE Sector s SET s.name = :name, s.global_length = :global, s.type = :type, s.topos = :topos WHERE s.id = :id")
 	void updateSector(@Param("id")Long idSector, @Param("name")String name, @Param("global")Integer global_length, @Param("type")String type, @Param("topos")Topos topos);
+	
+	public List<Sector> findByUserId(Long id);
+	
+	public List<Sector> findByToposId(Long id);
 }

@@ -63,7 +63,7 @@ public class WayService extends CustomUserDetailsService{
 		wayRepository.updateWay(idWay, length, difficulty, description, sector);
 	}
 	
-	public Boolean asAcces(Long idWay) {
+	public Boolean checkAcces(Long idWay) {
 		if (getByUserId(userService.authUser().getId()).contains(getById(idWay))) {
 			return true;
 		} else {

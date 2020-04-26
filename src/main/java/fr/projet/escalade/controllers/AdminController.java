@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(value = "/admin")
 public class AdminController {
 
-	/*
+	/**
 	 * affiche la page d'accueil des administrateur.
 	 */
 	@GetMapping("/")

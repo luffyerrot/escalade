@@ -31,7 +31,7 @@ public class UserController {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 	
-	/*
+	/**
 	 * affiche la page d'information de l'utilisateur connecté.
 	 */
 	@RequestMapping(value = "/detail", method = RequestMethod.GET)
@@ -46,7 +46,7 @@ public class UserController {
 	    }
 	}
 
-	/*
+	/**
 	 * affiche la page des requêtes de réservation.
 	 */
 	@RequestMapping(value = "/toposRequest", method = RequestMethod.GET)
@@ -55,12 +55,12 @@ public class UserController {
 	    return new ModelAndView("user/toposRequest", model);
 	}
 	
-	/*
+	/**
 	 * accepte la réservation.
 	 */
 	@RequestMapping(value = "/toposAccepted", method = RequestMethod.GET)
 	public ModelAndView requestAcceptedGet(ModelMap model, @RequestParam(name="idTopos", required = true) Long idTopos, @RequestParam(name="idBooking", required = true) Long idBooking) {
-		if(toposService.asAcces(idTopos)) {
+		if(toposService.checkAcces(idTopos)) {
 			bookingService.changeAccepted(idBooking, true);
 			toposService.changeRequest(idTopos);
 			toposService.changeReserved(idTopos);
@@ -69,12 +69,12 @@ public class UserController {
 	    return new ModelAndView("user/toposRequest", model);
 	}
 	
-	/*
+	/**
 	 * refuse la réservation.
 	 */
 	@RequestMapping(value = "/toposRefused", method = RequestMethod.GET)
 	public ModelAndView requestRefusedGet(ModelMap model, @RequestParam(name="idTopos", required = true) Long idTopos, @RequestParam(name="idBooking", required = true) Long idBooking) {
-		if(toposService.asAcces(idTopos)) {
+		if(toposService.checkAcces(idTopos)) {
 			bookingService.changeAccepted(idBooking, false);
 			toposService.changeRequest(idTopos);
 		}
@@ -83,7 +83,7 @@ public class UserController {
 	
 
 
-	/*
+	/**
 	 * affiche la page de modification des données de l'utilisateur connecté.
 	 * GET
 	 */
@@ -93,7 +93,7 @@ public class UserController {
 	    return new ModelAndView("user/update", model);
 	}
 	
-	/*
+	/**
 	 * permet de modifier les données de l'utilisateur connecté
 	 * affiche la page de modification des données de l'utilisateur connecté.
 	 * POST

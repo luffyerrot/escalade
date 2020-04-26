@@ -42,24 +42,28 @@ public class PagesController{
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
-	/*
+	/**
 	 * affiche la page principale.
 	 */	
 	@GetMapping("/")
 	public ModelAndView home(ModelMap model) {
-		model.addAttribute("bookings", bookingService.getByUserAndAccepted(userService.authUser()));
-		model.addAttribute("checkbookings", bookingService.getByToposAndAccepted(userService.authUser().getTopos()));
+		if (userService.authUser() != null) {
+			model.addAttribute("bookings", bookingService.getByUserAndAccepted(userService.authUser()));
+			if (userService.authUser().getTopos() != null && userService.authUser().getTopos().size() != 0) {
+				model.addAttribute("checkbookings", bookingService.getByToposAndAccepted(userService.authUser().getTopos()));
+			}
+		}
 	    return new ModelAndView("home", model);
 	}
 
-	/*
+	/**
 	 * annule la réservation
 	 * affiche la page principale.
 	 * GET
 	 */
 	@RequestMapping(value = "/bookingCancel", method = RequestMethod.GET)
 	public ModelAndView requestRefusedGet(ModelMap model, @RequestParam(name="idBooking", required = false) Long idBooking) {		
-		if(bookingService.asAcces(idBooking) || toposService.asAcces(bookingService.getById(idBooking).getTopos().getId())) {
+		if(bookingService.checkAcces(idBooking) || toposService.checkAcces(bookingService.getById(idBooking).getTopos().getId())) {
 			bookingService.changeAccepted(idBooking, false);
 			toposService.changeReserved(bookingService.getById(idBooking).getTopos().getId());
 		}
@@ -68,7 +72,7 @@ public class PagesController{
 	    return new ModelAndView("redirect:/", model);
 	}
 
-	/*
+	/**
 	 * affiche la page de création de l'utilisateur.
 	 * GET
 	 */
@@ -77,7 +81,7 @@ public class PagesController{
 	    return new ModelAndView("create", model);
 	}
 
-	/*
+	/**
 	 * permet de créer un profile utilisateur
 	 * affiche la page de création de l'utilisateur.
 	 * POST
@@ -89,7 +93,7 @@ public class PagesController{
 	    return new ModelAndView("create", model);
 	}
 	
-	/*
+	/**
 	 * affiche la page des topos publié.
 	 * GET
 	 */
@@ -105,7 +109,7 @@ public class PagesController{
 	    return new ModelAndView("toposAll", model);
 	}
 
-	/*
+	/**
 	 * permet de réserver un topos
 	 * affiche la page des topos publié.
 	 * GET
@@ -125,7 +129,7 @@ public class PagesController{
 	    return new ModelAndView("redirect:/toposAll", model);
 	}
 
-	/*
+	/**
 	 * affiche la page d'information du topos séléctionné.
 	 * GET
 	 */
@@ -137,7 +141,7 @@ public class PagesController{
 	    return new ModelAndView("toposInfo", model);
 	}
 
-	/*
+	/**
 	 * permet de publier un commentaire
 	 * affiche la page d'information du topos séléctionné.
 	 * POST
@@ -151,7 +155,7 @@ public class PagesController{
 	    return new ModelAndView("toposInfo", model);
 	}
 
-	/*
+	/**
 	 * affiche la page d'information du secteur séléctionné.
 	 * GET
 	 */
@@ -162,7 +166,7 @@ public class PagesController{
 	    return new ModelAndView("sectorInfo", model);
 	}
 
-	/*
+	/**
 	 * permet de supprimer un commentaire
 	 * affiche la page des topos publié.
 	 * GET
@@ -175,7 +179,7 @@ public class PagesController{
 	    return new ModelAndView("redirect:/toposInfo", model);
 	}
 
-	/*
+	/**
 	 * affiche la page de modification du commentaire séléctionné.
 	 * GET
 	 */
@@ -185,7 +189,7 @@ public class PagesController{
 	    return new ModelAndView("modifComment", model);
 	}
 
-	/*
+	/**
 	 * permet de modifier un commentaire
 	 * affiche la page de modification du commentaire séléctionné.
 	 * POST

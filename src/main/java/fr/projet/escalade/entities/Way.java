@@ -42,6 +42,12 @@ public class Way implements Serializable{
 	
 	//---------------------------------------------------------------------------------
 
+	@Override
+	public String toString() {
+		return "Way [id=" + id + ", length=" + length + ", difficulty=" + difficulty + ", description=" + description
+				+ "]";
+	}
+	
 	public Long getId() {
 		return id;
 	}

@@ -25,7 +25,7 @@ public class SectorController {
 	@Autowired
 	ToposService toposService;
 	
-	/*
+	/**
 	 * affiche la page d'information des secteurs de l'utilisateur connecté.
 	 */
 	@RequestMapping(value = "/info", method = RequestMethod.GET)
@@ -36,7 +36,7 @@ public class SectorController {
 	    return new ModelAndView("sector/info", model);
 	}
 	
-	/*
+	/**
 	 * affiche la page de création des secteurs de l'utilisateur connecté.
 	 * GET
 	 */
@@ -47,7 +47,7 @@ public class SectorController {
 	    return new ModelAndView("sector/create", model);
 	}
 
-	/*
+	/**
 	 * permet de créer un secteur personnalisé
 	 * affiche la page d"information des secteurs de l'utilisateur connecté.
 	 * POST
@@ -61,13 +61,13 @@ public class SectorController {
 	    return new ModelAndView("redirect:/sector/info", model);
 	}
 
-	/*
+	/**
 	 * affiche la page de modification des secteurs de l'utilisateur connecté.
 	 * GET
 	 */
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	public ModelAndView updateGet(ModelMap model, @RequestParam(name="idSector", required = true) Long idSector) {
-		if(sectorService.asAcces(idSector)) {
+		if(sectorService.checkAcces(idSector)) {
 			model.addAttribute("topos", toposService.getByUserId(userService.authUser().getId()));
 			model.addAttribute("sectors", sectorService.getById(idSector));
 			model.addAttribute("users", userService.getById(userService.authUser().getId()));
@@ -77,7 +77,7 @@ public class SectorController {
 		}
 	}
 
-	/*
+	/**
 	 * permet de modification un secteur personnalisé
 	 * affiche la page d"information des secteurs de l'utilisateur connecté.
 	 * POST

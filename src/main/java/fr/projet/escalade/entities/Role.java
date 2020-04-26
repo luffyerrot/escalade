@@ -24,6 +24,11 @@ public class Role implements Serializable{
     private List <User> users;
 
 	//---------------------------------------------------------------------------------
+
+	@Override
+	public String toString() {
+		return "Role [id=" + id + ", name=" + name + "]";
+	}
 	
 	public Integer getId() {
 		return id;

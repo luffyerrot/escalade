@@ -13,9 +13,9 @@ import fr.projet.escalade.entities.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-	Optional<User> findByEmail(String email);
-	
 	@Modifying
 	@Query("UPDATE User u SET u.username = :username, u.email = :email WHERE u.id = :id")
 	void updateUser(@Param("id")Long idTopos, @Param("username")String username, @Param("email")String description);
+	
+	Optional<User> findByEmail(String email);
 }

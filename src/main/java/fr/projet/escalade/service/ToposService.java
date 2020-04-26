@@ -122,7 +122,7 @@ public class ToposService extends CustomUserDetailsService{
 		}
 	}
 	
-	public Boolean asAcces(Long idTopos) {
+	public Boolean checkAcces(Long idTopos) {
 		if (getByUserId(userService.authUser().getId()).contains(getById(idTopos))) {
 			return true;
 		} else {

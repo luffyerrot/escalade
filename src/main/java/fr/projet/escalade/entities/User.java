@@ -32,10 +32,7 @@ public class User implements Serializable {
 	//---------------------------------------------------------------------------------
    
 	@ManyToMany(cascade=CascadeType.MERGE)
-    @JoinTable(
-       name="user_role",
-       joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")},
-       inverseJoinColumns={@JoinColumn(name="role_id", referencedColumnName="id")})
+    @JoinTable(name="user_role", joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")}, inverseJoinColumns={@JoinColumn(name="role_id", referencedColumnName="id")})
     private List <Role> roles;
 	
 	@OneToMany(mappedBy = "user")
@@ -55,15 +52,13 @@ public class User implements Serializable {
     
     //----------------------------------------------------------------------------------
 	
-	
-	
-	public Long getId() {
-		return id;
-	}
-
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", email=" + email + ", username=" + username + "]";
+	}
+	
+	public Long getId() {
+		return id;
 	}
 
 	public void setId(Long id) {

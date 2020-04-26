@@ -57,9 +57,9 @@ public class Topos implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Topos [id=" + id + ", name=" + name + ", place=" + place + ", reserved=" + reserved + ", description="
-				+ description + ", date=" + date + ", user=" + user + ", sectors=" + sectors + ", bookings=" + bookings
-				+ "]";
+		return "Topos [id=" + id + ", name=" + name + ", place=" + place + ", reserved=" + reserved + ", published="
+				+ published + ", description=" + description + ", date=" + date + ", official=" + official
+				+ ", request=" + request + "]";
 	}
 	
 	public Long getId() {

@@ -112,7 +112,7 @@ public class BookingService extends CustomUserDetailsService{
 		bookingRepository.deleteById(idBooking);
 	}
 	
-	public Boolean asAcces(Long idBooking) {
+	public Boolean checkAcces(Long idBooking) {
 		if (getByUserId(userService.authUser().getId()).contains(getById(idBooking))) {
 			return true;
 		} else {

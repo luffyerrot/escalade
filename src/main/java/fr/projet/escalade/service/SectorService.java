@@ -63,7 +63,7 @@ public class SectorService extends CustomUserDetailsService{
 		sectorRepository.updateSector(idSector, name, global_length, type, topos);
 	}
 	
-	public Boolean asAcces(Long idSector) {
+	public Boolean checkAcces(Long idSector) {
 		this.logger.info("asAcces Call = " + idSector);
 		if (getByUserId(userService.authUser().getId()).contains(getById(idSector))) {
 			return true;

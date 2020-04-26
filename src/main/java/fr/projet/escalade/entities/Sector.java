@@ -38,6 +38,11 @@ public class Sector implements Serializable{
 
 	//---------------------------------------------------------------------------------
 
+	@Override
+	public String toString() {
+		return "Sector [id=" + id + ", name=" + name + ", global_length=" + global_length + ", type=" + type + "]";
+	}
+	
 	public Long getId() {
 		return id;
 	}

@@ -31,8 +31,14 @@ public class Booking implements Serializable{
 	
 	//---------------------------------------------------------------------------------
 	
+	
 	public Long getId() {
 		return id;
+	}
+
+	@Override
+	public String toString() {
+		return "Booking [id=" + id + ", booking_date=" + booking_date + ", accepted=" + accepted + "]";
 	}
 
 	public void setId(Long id) {

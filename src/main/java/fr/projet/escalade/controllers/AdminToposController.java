@@ -17,7 +17,7 @@ public class AdminToposController {
 	@Autowired
 	ToposService toposService;
 
-	/*
+	/**
 	 * affiche la page d'information des topos pour l'officialisation.
 	 */
 	@RequestMapping(value = "/info", method = RequestMethod.GET)
@@ -28,7 +28,7 @@ public class AdminToposController {
 	    return new ModelAndView("admin/topos/info", model);
 	}
 	
-	/*
+	/**
 	 * permet d'officialiser des topos.
 	 */
 	@RequestMapping(value = "/toposOfficial", method = RequestMethod.GET)

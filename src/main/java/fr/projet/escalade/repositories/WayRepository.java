@@ -14,11 +14,11 @@ import fr.projet.escalade.entities.Way;
 @Repository
 public interface WayRepository extends JpaRepository<Way, Long>{
 
-	public List<Way> findByUserId(Long id);
-	
-	public List<Way> findBySectorId(Long id);
-
 	@Modifying
 	@Query("UPDATE Way w SET w.length = :length, w.difficulty = :difficulty, w.description = :desc, w.sector = :sector WHERE w.id = :id")
 	void updateWay(@Param("id")Long idWay, @Param("length")Integer length, @Param("difficulty")Integer difficulty, @Param("desc")String description, @Param("sector")Sector sector);
+
+	public List<Way> findByUserId(Long id);
+	
+	public List<Way> findBySectorId(Long id);
 }
