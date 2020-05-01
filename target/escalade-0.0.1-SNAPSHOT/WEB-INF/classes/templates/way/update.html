@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head th:insert="fragments/head.html">
+	<meta charset="UTF-8"/>
+	<title>Modification de parcour</title>
+</head>
+<body>
+	<header th:insert="fragments/header.html"></header>
+	<div class="container" align="center">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<h2 class="card-title">Modifier un parcour</h2>*
+					<div class="card-body">
+						<form action="#" th:action="@{/way/update}" th:objet="${way}" method="post" id="formWay">
+							<input type="hidden" th:name="id" th:value="${ways.id}"/>
+							<div class="form-group">
+								<label>Longueur :</label>
+								<input type="text" th:name="length" placeholder="La longeur du parcour (en km)" th:value="${ways.length}" autofocus class="form-control"/>
+							</div>
+							<br/>
+							<div class="form-group">
+								<label>Niveau de difficulté :</label>
+								<input type="text" th:name="difficulty" placeholder="La difficulté du parcour (de 0 à 9)" th:value="${ways.difficulty}" class="form-control"/>
+							</div>
+							<br/>
+							<label>Choisir un secteur :</label>
+							<select th:name="sector" form="formWay">
+								<option th:value="${ways?.sector?.id}" th:text="${ways?.sector?.name}">...</option>
+								<option th:value="${null}">--------------------</option>
+								<option th:each="sector : ${sectors}" th:value="${sector.id}" th:text="${sector.name}">...</option>
+							</select>
+							<br/><br/>
+							<div class="form-group">
+								<label>Description :</label>
+								<textarea th:name="description" placeholder="La description du parcour" th:text="${ways.description}" class="form-control" form="formWay"></textarea>
+							</div>
+							<br/>
+							<input type="submit" value="Envoyer"  class="btn btn-outline-secondary" id="link"/>
+							<br/><br/>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:insert="fragments/script.html"></div>
+	<div th:insert="fragments/footer.html"></div>
+</body>
+</html>

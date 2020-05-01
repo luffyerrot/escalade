@@ -60,9 +60,9 @@ public class ToposController {
 	/**
 	 * permet d'officialiser le topos sélectionné
 	 * affiche la page d'information des topos de l'utilisateur connecté.
-	 * GET
+	 * POST
 	 */
-	@RequestMapping(value = "/official", method = RequestMethod.GET)
+	@RequestMapping(value = "/official", method = RequestMethod.POST)
 	public ModelAndView officialGet(ModelMap model, @RequestParam(name="officialvalue", required = false) Boolean official, @RequestParam(name="idTopos", required = false) Long idTopos) {
 		if(toposService.checkAcces(idTopos)) {
 			if (official != null) {
@@ -80,9 +80,9 @@ public class ToposController {
 	/**
 	 * permet de publier le topos sélectionné
 	 * affiche la page d'information des topos de l'utilisateur connecté.
-	 * GET
+	 * POST
 	 */
-	@RequestMapping(value = "/published", method = RequestMethod.GET)
+	@RequestMapping(value = "/published", method = RequestMethod.POST)
 	public ModelAndView publishedGet(ModelMap model, @RequestParam(name="publishedvalue", required = false) Boolean published, @RequestParam(name="idTopos", required = false) Long idTopos) {
 		if(toposService.checkAcces(idTopos)) {
 			if (published != null) {

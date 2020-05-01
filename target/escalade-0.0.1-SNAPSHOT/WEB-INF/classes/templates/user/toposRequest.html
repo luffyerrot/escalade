@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:insert="fragments/head.html">
+	<meta charset="UTF-8"/>
+	<title>Profils</title>
+</head>
+<body>
+	<header th:insert="fragments/header.html"></header>
+	<div class="container" align="center">
+		<div class="row">
+			<div class="col-md-12">
+				<h1><b>Mes demandes de réservation</b></h1>
+				<div class="card">
+					<h2 class="card-title">Les réservations</h2>
+					<div class="card-body">
+						<div sec:authorize="isAuthenticated()">
+							<table class="table table-dark table-responsive">
+								<tr>
+									<th scope="col">Utilisateur</th>
+									<th scope="col">Nom du topos</th>
+									<th scope="col">Date</th>
+									<th scope="col">Accepter</th>
+									<th scope="col">Refuser</th>
+								</tr>
+								<tr th:each="booking : ${bookings}">
+							        <td th:text="${booking?.user?.username}">...</td>
+							        <td th:text="${booking?.topos?.name}">...</td>
+							        <td th:text="${#dates.format(booking.booking_date, 'dd-MM-yyyy hh:mm:ss')}">...</td>
+							        <td>
+							        	<a th:href="@{toposAccepted(idTopos = ${booking?.topos?.id}, idBooking = ${booking?.id})}" class="btn btn-outline-secondary">Accepter</a>	
+							        </td>
+							        <td>
+							        	<a th:href="@{toposRefused(idTopos = ${booking?.topos?.id}, idBooking = ${booking?.id})}" class="btn btn-outline-secondary">Refuser</a>	
+							        </td>
+							    </tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:insert="fragments/script.html"></div>
+	<div th:insert="fragments/footer.html"></div>
+</body>
+</html>

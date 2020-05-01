@@ -1,0 +1,20 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html, body {
+	height: 100%;
+}
+
+#footer {
+	background-color: grey;
+	position : fixed;
+	height: 40px;
+	width: 100%;
+	bottom: 0;
+}
+
+div {
+	display: block;
+}

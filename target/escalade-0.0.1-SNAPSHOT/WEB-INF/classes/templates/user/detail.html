@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head th:insert="fragments/head.html">
+	<meta charset="UTF-8"/>
+	<title>Information</title>
+</head>
+<body>
+	<header th:insert="fragments/header.html"></header>
+	<div class="container" align="center">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<h2 class="card_tittle"><b>Details</b></h2>
+					<div class="card-body" th:each="user : ${users}">
+						<div class="card-body">
+							<table class="table table-dark table-responsive">
+								<tr>
+									<th scope="col">Profil</th>
+									<th scope="col">Infos</th>
+								</tr>
+								<tr>
+									<td>Pseudo :</td>
+									<td th:text="${user.username}">...</td>
+								</tr>
+								<tr>
+									<td>Adresse mail :</td>
+									<td th:text="${user.email}">...</td>
+								</tr>
+							</table>
+							<div id="link">
+								<a th:href="@{update}" class="btn btn-outline-secondary">Edition</a>
+								<a th:href="@{toposRequest}" class="btn btn-outline-secondary">Mes demandes de réservation</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:insert="fragments/script.html"></div>
+	<div th:insert="fragments/footer.html"></div>
+</body>
+</html>

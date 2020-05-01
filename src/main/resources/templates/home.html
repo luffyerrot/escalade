@@ -36,7 +36,11 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 									</td>
 							        <td th:text="${#dates.format(booking?.booking_date, 'dd-MM-yyyy hh:mm:ss')}">...</td>
 							        <td th:if="${booking?.accepted} == true">
-										<a th:href="@{/bookingCancel(idBooking = ${booking?.id})}" class="btn btn-outline-secondary">Annuler</a>
+							        	<form action="#" th:action="@{/bookingCancel}" method="post">
+											<input type="hidden" th:name="idBooking" th:value="${booking?.id}"></input>
+											
+											<input type="submit" value="Annuler"  class="btn btn-outline-secondary" id="link"/>
+										</form>
 									</td>
 							    </tr>
 							</table>
@@ -53,7 +57,11 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 							        <td th:text="${checkbooking?.topos?.name}">...</td>
 							        <td th:text="${#dates.format(checkbooking?.booking_date, 'dd-MM-yyyy hh:mm:ss')}">...</td>
 							        <td>
-										<a th:href="@{/bookingCancel(idBooking = ${checkbooking?.id})}" class="btn btn-outline-secondary">Annuler</a>
+							        	<form action="#" th:action="@{/bookingCancel}" method="post">
+											<input type="hidden" th:name="idBooking" th:value="${checkbooking?.id}"></input>
+											
+											<input type="submit" value="Annuler"  class="btn btn-outline-secondary" id="link"/>
+										</form>
 									</td>
 							    </tr>
 							</table>

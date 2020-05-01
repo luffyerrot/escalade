@@ -40,7 +40,12 @@
 										</div>
 									</td>
 									<td sec:authorize="hasRole('ROLE_ADMIN')">
-										<a th:href="@{/topos/official(officialvalue = ${topo.official}, idTopos = ${topo.id})}" class="btn btn-outline-secondary">Changer</a>
+										<form action="#" th:action="@{/topos/official}" method="post">
+											<input type="hidden" th:name="officialvalue" th:value="${topo.official}"></input>
+											<input type="hidden" th:name="idTopos" th:value="${topo.id}"></input>
+											
+											<input type="submit" value="Changer"  class="btn btn-outline-secondary" id="link"/>
+										</form>
 									</td>
 							        <td>
 							        	<div th:switch="${topo.published}">
@@ -49,7 +54,12 @@
 										</div>
 							        </td>
 									<td>
-										<a th:href="@{/topos/published(publishedvalue = ${topo.published}, idTopos = ${topo.id})}" class="btn btn-outline-secondary">Publier</a>
+										<form action="#" th:action="@{/topos/published}" method="post">
+											<input type="hidden" th:name="publishedvalue" th:value="${topo.published}"></input>
+											<input type="hidden" th:name="idTopos" th:value="${topo.id}"></input>
+											
+											<input type="submit" value="Publier"  class="btn btn-outline-secondary" id="link"/>
+										</form>
 									</td>
 							    </tr>
 						    </tbody>

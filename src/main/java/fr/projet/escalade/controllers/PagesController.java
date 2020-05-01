@@ -59,9 +59,9 @@ public class PagesController{
 	/**
 	 * annule la réservation
 	 * affiche la page principale.
-	 * GET
+	 * POST
 	 */
-	@RequestMapping(value = "/bookingCancel", method = RequestMethod.GET)
+	@RequestMapping(value = "/bookingCancel", method = RequestMethod.POST)
 	public ModelAndView requestRefusedGet(ModelMap model, @RequestParam(name="idBooking", required = false) Long idBooking) {		
 		if(bookingService.checkAcces(idBooking) || toposService.checkAcces(bookingService.getById(idBooking).getTopos().getId())) {
 			bookingService.changeAccepted(idBooking, false);

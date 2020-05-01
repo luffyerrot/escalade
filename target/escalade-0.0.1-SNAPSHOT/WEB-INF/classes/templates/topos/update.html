@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head th:insert="fragments/head.html">
+	<meta charset="UTF-8"/>
+	<title>Modification de topos</title>
+</head>
+<body>
+	<header th:insert="fragments/header.html"></header>
+	<div class="container" align="center">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<h2 class="card-title">Modifier le topos</h2>
+					<div class="card-body">
+						<form action="#" th:action="@{/topos/update}" th:objet="${topos}" method="post" id="formTopos">
+							<input type="hidden" th:name="id" th:value="${topos.id}"></input>
+							<input type="hidden" th:name="reserved" th:value="${topos.reserved}"></input>
+							<input type="hidden" th:name="official" th:value="${topos.official}"></input>
+							<input type="hidden" th:name="published" th:value="${topos.published}"></input>
+							<div class="form-group">
+								<label>Nom :</label>
+								<input type="text" th:name="name" placeholder="Le nom du Topos" th:value="${topos.name}" autofocus class="form-control"/>
+							</div>
+							<br/>
+							<div class="form-group">
+								<label>Lieu :</label>
+								<input type="text" th:name="place" placeholder="Le lieu " th:value="${topos.place}" class="form-control"/>
+							</div>
+							<br/>
+							<div class="form-group">
+								<label>Description :</label>
+								<textarea th:name="description" placeholder="La description de votre Topos" th:text="${topos.description}" class="form-control" form="formTopos"></textarea>
+							</div>
+							<input type="submit" value="Envoyer"  class="btn btn-outline-secondary" id="link"/>
+							<br/><br/>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:insert="fragments/script.html"></div>
+	<div th:insert="fragments/footer.html"></div>
+</body>
+</html>
