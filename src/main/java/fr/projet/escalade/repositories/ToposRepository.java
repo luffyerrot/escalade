@@ -40,5 +40,6 @@ public interface ToposRepository extends JpaRepository<Topos, Long>{
 	
 	public List<Topos> findAllByPublished(Boolean published);
 	
-	public List<Topos> findByUserUsernameOrNameAndPublished(String username, String toposname, Boolean published);
+	@Query("SELECT t FROM Topos t WHERE t.published = :published AND t.user.username = :username OR t.name = :toposname")
+	public List<Topos> findByUserUsernameOrNameAndPublished(@Param("username")String username, @Param("toposname")String toposname, @Param("published")Boolean published);
 }

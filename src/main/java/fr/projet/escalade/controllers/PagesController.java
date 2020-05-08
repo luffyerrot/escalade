@@ -176,6 +176,7 @@ public class PagesController{
 		commentService.deleteById(idComment);
 		model.addAttribute("comments", commentService.getByToposId(idTopos));
 		model.addAttribute("topos", toposService.getById(idTopos));
+		model.addAttribute("idTopos", idTopos);
 	    return new ModelAndView("redirect:/toposInfo", model);
 	}
 
@@ -195,10 +196,10 @@ public class PagesController{
 	 * POST
 	 */
 	@RequestMapping(value = "/modifComment", method = RequestMethod.POST)
-	public ModelAndView modifCommentPost(@ModelAttribute("commentObj") Comment comment, ModelMap model) {
-		commentService.update(comment.getId(), comment.getComment());
-		model.addAttribute("comments", commentService.getById(comment.getId()));
-		model.addAttribute("topos", toposService.getById(comment.getTopos().getId()));
+	public ModelAndView modifCommentPost(@RequestParam(name="id", required = true) Long idComment, @RequestParam(name="comment", required = true)String comment,ModelMap model) {
+		commentService.update(idComment, comment);
+		model.addAttribute("comments", commentService.getByToposId(commentService.getById(idComment).getTopos().getId()));
+		model.addAttribute("topos", toposService.getById(commentService.getById(idComment).getTopos().getId()));
 	    return new ModelAndView("toposInfo", model);
 	}
 }
